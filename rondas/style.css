@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("../imagen/wood.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ---------- HEADER ---------- */
+.titulo {
+    text-align: center;
+    color: white;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.botones button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: #f0ece4;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-terminar {
+    background-color: #c0522d !important;
+    color: white;
+}
+
+/* ---------- PESTAÑAS ---------- */
+.pestanas {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background-color: #ece7dd;
+    border-radius: 30px;
+    padding: 8px;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.pestanas button {
+    flex: 1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pestana-act {
+    background-color: #3d2418 !important;
+    color: white !important;
+}
+
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+.contenedor-principal {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ---------- CONTADORES ---------- */
+.contadores {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.contador {
+    background-color: #ece7dd;
+    border-radius: 15px;
+    padding: 20px;
+    flex: 1;
+    min-width: 150px;
+    text-align: center;
+}
+
+.numero {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #3d2418;
+}
+
+.etiqueta {
+    color: #6b5d4f;
+    font-size: 14px;
+}
+
+/* ---------- PANEL DE RONDAS ---------- */
+.panel-rondas {
+    background-color: #3d2418;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.tabs-rondas {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.tab-ronda {
+    background: transparent;
+    border: none;
+    color: #d9cfc2;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.tab-ronda-act {
+    color: white;
+    border-bottom: 3px solid white;
+}
+
+/* ---------- TARJETA DE ENFRENTAMIENTO ---------- */
+.tarjeta-enfrentamiento {
+    background-color: #ece7dd;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.cabecera-enfrentamiento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.info-equipo {
+    display: flex;
+    flex-direction: column;
+    color: #3d2418;
+}
+
+.info-equipo.derecha {
+    text-align: right;
+}
+
+.vs {
+    background-color: #d9cfc2;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.cuerpo-enfrentamiento {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-top: 1px solid #d9cfc2;
+    border-bottom: 1px solid #d9cfc2;
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+.columna-estudiantes {
+    flex: 1;
+}
+
+.fila-estudiante {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.fila-estudiante label {
+    flex: 1;
+    font-size: 14px;
+    color: #3d2418;
+}
+
+.input-puntaje {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.pie-enfrentamiento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marcador {
+    font-weight: bold;
+    color: #3d2418;
+}
+
+.btn-registrar {
+    background-color: #3d6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-siguiente-ronda {
+    display: block;
+    margin: 20px auto 0 auto;
+    background-color: #c0522d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
