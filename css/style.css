@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", Arial, sans-serif;
+  background-image: url("../imagen/wood.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  overflow-x: hidden;
+}
+
+
+:root {
+  /* Colors */
+  --primary-color: #421D0B;
+  --secondary-color: #E5E1D7;
+  --foreground-color: #D9D9D9;
+  --accent-color: #326771;
+  --danger-color: #D23E11;
+  --white-color: #F2F2F2;
+  --black-color: #292929;
+
+  /* Border Radius */
+  --border-radius: 1.875rem;
+  --button-border-radius: 6.25rem;
+  --input-border-radius: 0.3125rem;
+  --lexico-card-border-radius: 0.3125rem;
+  --chip-border-radius: 0.625rem;
+
+  /* Gaps */
+  --content-gap: 1.875rem;
+  --switcher-gap: 0.625rem;
+  --card-gap: 0.625rem;
+  --form-gap: 0.625rem;
+  --podium-gap: 0.625rem;
+  --positions-gap: 0.3125rem;
+  --round-detail-gap: 0.625rem;
+
+  /* Padding */
+  --card-padding: 1.875rem;
+  --content-padding: 1.5625rem;
+  --switcher-padding-x: var(--content-padding);
+  --switcher-padding-y: 0.5rem;
+  --buttonX-padding: 1.25rem;
+  --buttonY-padding: 0.625rem;
+  --input-padding: 0.3125rem;
+  --podium-padding: 0.3125rem;
+  --position-card-padding: 0.625rem;
+  --chip-padding: 0.625rem;
+
+  /* Font Sizes */
+  --xs-font-size: 0.75rem;
+  --base-font-size: 1rem;
+  --lg-font-size: 1.5rem;
+  --xl-font-size: 2rem;
+  --card-title-font-size: 1.875rem;
+  --podium-number-font-size: 6rem;
+}
+
+/* Base styles */
+p {
+  color: var(--black-color);
+  font-size: var(--base-font-size);
+}
+
+/* Utilities */
+.text-xs {
+  font-size: var(--xs-font-size);
+}
+
+.text-base {
+  font-size: var(--base-font-size);
+}
+
+.text-lg {
+  font-size: var(--lg-font-size);
+}
+
+.text-xl {
+  font-size: var(--xl-font-size);
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+/* Components */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+
+  min-height: 100vh;
+  height: 100%;
+
+  padding: 3rem 2rem 0rem 2rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.button {
+  --background-color: var(--foreground-color);
+  --text-color: var(--black-color);
+  --border-color: var(--black-color);
+  
+  font-size: var(--base-font-size);
+  font-weight: bold;
+  color: var(--text-color);
+  padding: var(--buttonY-padding) var(--buttonX-padding);
+  border-radius: var(--button-border-radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+}
+
+.default-button {
+  --background-color: var(--foreground-color);
+  --text-color: var(--black-color);
+  --border-color: var(--black-color);
+}
+
+.accent-button {
+  --background-color: var(--accent-color);
+  --text-color: var(--white-color);
+  --border-color: var(--white-color);
+}
+
+.danger-button {
+  --background-color: var(--danger-color);
+  --text-color: var(--white-color);
+  --border-color: var(--white-color);
+}
+
+.main-buttons {
+  display: flex;
+  gap: var(--switcher-gap);
+}
+
+.switcher {
+  --background-color: var(--secondary-color);
+  --active-background-color: var(--primary-color);
+  --text-color: var(--black-color);
+  --active-text-color: var(--white-color);
+  
+  display: flex;
+  gap: var(--switcher-gap);
+  padding: var(--switcher-padding-y) var(--switcher-padding-x);
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+}
+
+.tab-switcher {
+  --background-color: var(--secondary-color);
+  --active-background-color: var(--primary-color);
+  --text-color: var(--black-color);
+  --active-text-color: var(--white-color);
+}
+
+.content-switcher {
+  --background-color: var(--secondary-color);
+  --active-background-color: var(--primary-color);
+  --text-color: var(--black-color);
+  --active-text-color: var(--white-color);
+}
+
+.switcher > button, a {
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+
+  padding: var(--buttonY-padding) var(--buttonX-padding);
+
+  text-decoration: none;
+}
+
+.switcher > button.active, a.active {
+  background-color: var(--active-background-color);
+  color: var(--active-text-color);
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--content-gap);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-gap);
+  padding: var(--content-padding);
+  flex: 1;
+
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+  background-color: var(--primary-color);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+  padding: var(--card-padding);
+
+  border-radius: var(--border-radius);
+
+  background-color: var(--secondary-color);
+}
