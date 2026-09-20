@@ -3,111 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rondas - Concurso de Léxico</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Lexico - Clasificación</title>
+
+    <link rel="stylesheet" href="/rondas/style.css">
 </head>
+
 <body>
+    <div class="root">
+    <div class="title">
+        <img src="/imagen/Title.svg" alt="">
+    </div>
 
-    <header>
-        <h1 class="titulo">Concurso de Léxico</h1>
+    <div class="main-buttons">
+        <button class="button default-button">EXPORTAR RESPALDO</button>
+        <button class="button default-button">IMPORTAR RESPALDO</button>
+        <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+        <button class="button danger-button">REINICIAR EVENTO</button>
+    </div>
 
-        <div class="botones">
-            <button>Exportar respaldo</button>
-            <button>Importar respaldo</button>
-            <button>Imprimir clasificaciones</button>
-            <button class="btn-terminar">Reiniciar evento</button>
-        </div>
-    </header>
+    <div class="content-container">
+        <div class="switcher tab-switcher">
+            <a href="#">Configuracion</a>
+            <a href="#">Equipo</a>
+            <a class="active" href="#">Rondas</a>
+            <a href="#">Clasificaciones</a>
+    </div>
 
-    <nav class="pestanas">
-        <button>Configuracion</button>
-        <button>Equipos</button>
-        <button class="pestana-act">Rondas</button>
-        <button>Clasificaciones</button>
-    </nav>
+<div class="content-points">
+    <div class="card">
+        <span class="text-xl text-bold">1</span>
+        <span class="text-base">Rondas Generadas</span>
+    </div>
+    <div class="card">
+        <span class="text-xl text-bold">0</span>
+        <span class="text-base">Rondas Finalizadas</span>
+    </div>
+    <div class="card">
+        <span class="text-xl text-bold">5</span>
+        <span class="text-base">Rondas Programadas</span>
+    </div>
+    <div class="card">
+        <span class="text-xl text-bold">15</span>
+        <span class="text-base">Equipos</span>
+    </div>
+</div>
 
-    <main class="contenedor-principal">
+<div class="content">
+    <div class="switcher content-switcher">
+        <a class="active" href="#">Ronda 1</a>
+        <a href="#">Ronda 2</a>
+        <a href="#">Ronda 3</a>
+        <a href="#">Ronda 4</a>
+        <a href="#">Ronda 5</a>
+    </div>
+</div>
 
-        <section class="contadores">
-            <div class="contador">
-                <span class>"numero" id="rondasGeneradas">1</span>
-                <span class="etiqueta">Rondas generadas</span>
-            </div>
-            <div class="contador">
-                <span class="numero" id="rondasProgramadas">5</span>
-                <span class="etiqueta">Rondas Programadas</span>
-            </div>
-            <div class="contador">
-                <span class="numero" id="totalEquipos">15</span>
-                <span class="etiqueta">Equipos</span>
-            </div>
-        </section>
-
-                <section class="panel-rondas">
-
-            <div class="tabs-rondas">
-                <button class="tab-ronda tab-ronda-act">Ronda 1</button>
-                <button class="tab-ronda">Ronda 2</button>
-                <button class="tab-ronda">Ronda 3</button>
-            </div>
-
-            <div id="listaEnfrentamientos">
-
-                <div class="tarjeta-enfrentamiento">
-                    <div class="cabecera-enfrentamiento">
-                        <div class="info-equipo">
-                            <strong>Equipo 1</strong>
-                            <span>Escuela X</span>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="info-equipo derecha">
-                            <strong>Equipo 2</strong>
-                            <span>Escuela X</span>
-                        </div>
-                    </div>
-
-                    <div class="cuerpo-enfrentamiento">
-                        <div class="columna-estudiantes">
-                            <div class="fila-estudiante">
-                                <input type="checkbox" checked>
-                                <label>Integrante Equipo</label>
-                                <input type="number" value="0" class="input-puntaje">
-                            </div>
-                            <div class="fila-estudiante">
-                                <input type="checkbox" checked>
-                                <label>Integrante Equipo</label>
-                                <input type="number" value="0" class="input-puntaje">
-                            </div>
-                        </div>
-
-                        <div class="columna-estudiantes">
-                            <div class="fila-estudiante">
-                                <input type="checkbox" checked>
-                                <label>Integrante Equipo</label>
-                                <input type="number" value="0" class="input-puntaje">
-                            </div>
-                            <div class="fila-estudiante">
-                                <input type="checkbox" checked>
-                                <label>Integrante Equipo</label>
-                                <input type="number" value="0" class="input-puntaje">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pie-enfrentamiento">
-                        <span class="marcador">Marcador: 0-0</span>
-                        <button class="btn-registrar">Registrar Enfrentamiento</button>
-                    </div>
                 </div>
-
             </div>
-
-            <button class="btn-siguiente-ronda">Generar Siguiente Ronda</button>
-
-        </section>
-
-    </main>
-
-    <script src="rondas.js"></script>
+        </div>
+    </div>
 </body>
+
 </html>

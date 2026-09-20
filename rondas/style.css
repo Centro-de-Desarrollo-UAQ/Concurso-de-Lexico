@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,232 +7,243 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", Arial, sans-serif;
     background-image: url("../imagen/wood.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: 100vh;
-    padding: 20px;
+
+    overflow-x: hidden;
 }
 
-/* ---------- HEADER ---------- */
-.titulo {
-    text-align: center;
-    color: white;
-    font-size: 48px;
-    margin-bottom: 20px;
+:root {
+  /* Colors */
+    --primary-color: #421D0B;
+    --secondary-color: #E5E1D7;
+    --foreground-color: #D9D9D9;
+    --accent-color: #326771;
+    --danger-color: #D23E11;
+    --white-color: #F2F2F2;
+    --black-color: #292929;
+
+  /* Border Radius */
+    --border-radius: 1.875rem;
+    --button-border-radius: 6.25rem;
+    --input-border-radius: 0.3125rem;
+    --lexico-card-border-radius: 0.3125rem;
+    --chip-border-radius: 0.625rem;
+
+  /* Gaps */
+    --content-gap: 1.875rem;
+    --switcher-gap: 0.625rem;
+    --card-gap: 0.625rem;
+    --form-gap: 0.625rem;
+    --podium-gap: 0.625rem;
+    --positions-gap: 0.3125rem;
+    --round-detail-gap: 0.625rem;
+
+  /* Padding */
+    --card-padding: 1.875rem;
+    --content-padding: 1.5625rem;
+    --switcher-padding-x: var(--content-padding);
+    --switcher-padding-y: 0.5rem;
+    --buttonX-padding: 1.25rem;
+    --buttonY-padding: 0.625rem;
+    --input-padding: 0.3125rem;
+    --podium-padding: 0.3125rem;
+    --position-card-padding: 0.625rem;
+    --chip-padding: 0.625rem;
+
+  /* Font Sizes */
+    --xs-font-size: 0.75rem;
+    --base-font-size: 1rem;
+    --lg-font-size: 1.5rem;
+    --xl-font-size: 2rem;
+    --card-title-font-size: 1.875rem;
+    --podium-number-font-size: 6rem;
 }
 
-.botones {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+/* Base styles */
+p {
+    color: var(--black-color);
+    font-size: var(--base-font-size);
 }
 
-.botones button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 30px;
-    background-color: #f0ece4;
-    cursor: pointer;
+/* Utilities */
+.text-xs {
+    font-size: var(--xs-font-size);
+}
+
+.text-base {
+    font-size: var(--base-font-size);
+}
+
+.text-lg {
+    font-size: var(--lg-font-size);
+}
+
+.text-xl {
+    font-size: var(--xl-font-size);
+}
+
+.text-bold {
     font-weight: bold;
-    font-size: 14px;
 }
 
-.btn-terminar {
-    background-color: #c0522d !important;
-    color: white;
-}
-
-/* ---------- PESTAÑAS ---------- */
-.pestanas {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    background-color: #ece7dd;
-    border-radius: 30px;
-    padding: 8px;
-    max-width: 600px;
-    margin: 0 auto 30px auto;
-}
-
-.pestanas button {
-    flex: 1;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.pestana-act {
-    background-color: #3d2418 !important;
-    color: white !important;
-}
-
-/* ---------- CONTENEDOR PRINCIPAL ---------- */
-.contenedor-principal {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-/* ---------- CONTADORES ---------- */
-.contadores {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.contador {
-    background-color: #ece7dd;
-    border-radius: 15px;
-    padding: 20px;
-    flex: 1;
-    min-width: 150px;
-    text-align: center;
-}
-
-.numero {
-    display: block;
-    font-size: 32px;
-    font-weight: bold;
-    color: #3d2418;
-}
-
-.etiqueta {
-    color: #6b5d4f;
-    font-size: 14px;
-}
-
-/* ---------- PANEL DE RONDAS ---------- */
-.panel-rondas {
-    background-color: #3d2418;
-    border-radius: 20px;
-    padding: 25px;
-}
-
-.tabs-rondas {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.tab-ronda {
-    background: transparent;
-    border: none;
-    color: #d9cfc2;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 8px 0;
-}
-
-.tab-ronda-act {
-    color: white;
-    border-bottom: 3px solid white;
-}
-
-/* ---------- TARJETA DE ENFRENTAMIENTO ---------- */
-.tarjeta-enfrentamiento {
-    background-color: #ece7dd;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
-}
-
-.cabecera-enfrentamiento {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.info-equipo {
+/* Components */
+.root {
     display: flex;
     flex-direction: column;
-    color: #3d2418;
+    gap: 50px;
+
+    min-height: 100vh;
+    height: 100%;
+
+    padding: 3rem 2rem 0rem 2rem;
 }
 
-.info-equipo.derecha {
-    text-align: right;
-}
-
-.vs {
-    background-color: #d9cfc2;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-.cuerpo-enfrentamiento {
+.title {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    border-top: 1px solid #d9cfc2;
-    border-bottom: 1px solid #d9cfc2;
-    padding: 15px 0;
-    margin-bottom: 15px;
-}
-
-.columna-estudiantes {
-    flex: 1;
-}
-
-.fila-estudiante {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.fila-estudiante label {
-    flex: 1;
-    font-size: 14px;
-    color: #3d2418;
-}
-
-.input-puntaje {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.pie-enfrentamiento {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
-.marcador {
-    font-weight: bold;
-    color: #3d2418;
+.title > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.btn-registrar {
-    background-color: #3d6b6b;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
+.button {
+    --background-color: var(--foreground-color);
+    --text-color: var(--black-color);
+    --border-color: var(--black-color);
+    
+    font-size: var(--base-font-size);
     font-weight: bold;
+    color: var(--text-color);
+    padding: var(--buttonY-padding) var(--buttonX-padding);
+    border-radius: var(--button-border-radius);
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    }
+
+.default-button {
+    --background-color: var(--foreground-color);
+    --text-color: var(--black-color);
+    --border-color: var(--black-color);
+    }
+
+.accent-button {
+    --background-color: var(--accent-color);
+    --text-color: var(--white-color);
+    --border-color: var(--white-color);
+    }
+
+.danger-button {
+    --background-color: var(--danger-color);
+    --text-color: var(--white-color);
+    --border-color: var(--white-color);
+    }
+
+.main-buttons {
+    display: flex;
+    gap: var(--switcher-gap);
 }
 
-.btn-siguiente-ronda {
-    display: block;
-    margin: 20px auto 0 auto;
-    background-color: #c0522d;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 20px;
+.switcher {
+    --background-color: var(--secondary-color);
+    --active-background-color: var(--primary-color);
+    --text-color: var(--black-color);
+    --active-text-color: var(--white-color);
+    
+    display: flex;
+    gap: var(--switcher-gap);
+    padding: var(--switcher-padding-y) var(--switcher-padding-x);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+}
+
+.tab-switcher {
+    --background-color: var(--secondary-color);
+    --active-background-color: var(--primary-color);
+    --text-color: var(--black-color);
+    --active-text-color: var(--white-color);
+}
+
+.content-switcher {
+    --background-color: var(--secondary-color);
+    --active-background-color: var(--primary-color);
+    --text-color: var(--black-color);
+    --active-text-color: var(--white-color);
+}
+
+.switcher > button, a {
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+
+    padding: var(--buttonY-padding) var(--buttonX-padding);
+
+    text-decoration: none;
+}
+
+/* Los botones de acción SÍ deben verse clickeables */
+.button {
     cursor: pointer;
-    font-weight: bold;
+}
+
+.switcher.tab-switcher > a,
+.switcher.content-switcher > a {
+    cursor: pointer;
+}
+
+/* Las estadísticas NO deben verse clickeables */
+.content-points a {
+    cursor: default;
+}
+
+
+.switcher > button.active, a.active {
+    background-color: var(--active-background-color);
+    color: var(--active-text-color);
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: var(--content-gap);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--content-gap);
+    padding: var(--content-padding);
+    flex: 1;
+
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+    background-color: var(--primary-color);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap);
+    padding: var(--card-padding);
+
+    border-radius: var(--border-radius);
+
+    background-color: var(--secondary-color);
+}
+
+.content-points {
+    display: flex;
+    gap: var(--switcher-gap);
+}
+
+.content-points .card {
+    flex: 1;
 }
