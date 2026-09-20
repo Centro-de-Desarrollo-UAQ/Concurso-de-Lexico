@@ -10,58 +10,57 @@
 
 <body>
     <div class="root">
-    <div class="title">
-        <img src="/imagen/Title.svg" alt="">
-    </div>
+        <div class="title">
+            <img src="/imagen/Title.svg" alt="">
+        </div>
 
-    <div class="main-buttons">
-        <button class="button default-button">EXPORTAR RESPALDO</button>
-        <button class="button default-button">IMPORTAR RESPALDO</button>
-        <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
-        <button class="button danger-button">REINICIAR EVENTO</button>
-    </div>
+        <div class="main-buttons">
+            <button class="button default-button">EXPORTAR RESPALDO</button>
+            <button class="button default-button">IMPORTAR RESPALDO</button>
+            <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+            <button class="button danger-button">REINICIAR EVENTO</button>
+        </div>
 
-    <div class="content-container">
-        <div class="switcher tab-switcher">
-            <a href="#">Configuracion</a>
-            <a href="#">Equipo</a>
-            <a class="active" href="#">Rondas</a>
-            <a href="#">Clasificaciones</a>
-    </div>
+        <div class="content-container">
+            <div class="switcher tab-switcher">
+                <a href="#">Configuracion</a>
+                <a href="#">Equipo</a>
+                <a class="active" href="#">Rondas</a>
+                <a href="#">Clasificaciones</a>
+            </div>
 
-<div class="content-points">
-    <div class="card">
-        <span class="text-xl text-bold">1</span>
-        <span class="text-base">Rondas Generadas</span>
-    </div>
-    <div class="card">
-        <span class="text-xl text-bold">0</span>
-        <span class="text-base">Rondas Finalizadas</span>
-    </div>
-    <div class="card">
-        <span class="text-xl text-bold">5</span>
-        <span class="text-base">Rondas Programadas</span>
-    </div>
-    <div class="card">
-        <span class="text-xl text-bold">15</span>
-        <span class="text-base">Equipos</span>
-    </div>
-</div>
-
-<div class="content">
-    <div class="switcher content-switcher">
-        <a class="active" href="#">Ronda 1</a>
-        <a href="#">Ronda 2</a>
-        <a href="#">Ronda 3</a>
-        <a href="#">Ronda 4</a>
-        <a href="#">Ronda 5</a>
-    </div>
-</div>
-
+            <div class="content-points">
+                <div class="card">
+                    <span class="text-xl text-bold" id="numRondasGeneradas">0</span>
+                    <span class="text-base">Rondas Generadas</span>
                 </div>
+                <div class="card">
+                    <span class="text-xl text-bold" id="numRondasFinalizadas">0</span>
+                    <span class="text-base">Rondas Finalizadas</span>
+                </div>
+                <div class="card">
+                    <span class="text-xl text-bold" id="numRondasProgramadas">0</span>
+                    <span class="text-base">Rondas Programadas</span>
+                </div>
+                <div class="card">
+                    <span class="text-xl text-bold" id="numTotalEquipos">0</span>
+                    <span class="text-base">Equipos</span>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="switcher content-switcher" id="tabsRondas">
+                </div>
+
+                <div id="listaEnfrentamientos">
+                </div>
+
+                <button class="button accent-button" id="btnSiguienteRonda">Generar Siguiente Ronda</button>
             </div>
         </div>
     </div>
+
+    <script src="rondas.js"></script>
 </body>
 
 </html>
