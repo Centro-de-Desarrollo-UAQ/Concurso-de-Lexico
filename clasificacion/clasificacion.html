@@ -7,6 +7,8 @@
   <title>Lexico - Clasificación</title>
 
   <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/main-buttons.js" type="module"></script>
 </head>
 
 <body>
@@ -16,20 +18,20 @@
     </div>
 
     <div class="main-buttons">
-      <button class="button default-button">EXPORTAR RESPALDO</button>
-      <button class="button default-button">IMPORTAR RESPALDO</button>
-      <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
-      <button class="button danger-button">REINICIAR EVENTO</button>
+      <button id="export-button" class="button default-button">EXPORTAR RESPALDO</button>
+      <button id="import-button" class="button default-button">IMPORTAR RESPALDO</button>
+      <button id="print-button" class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+      <button id="reset-button" class="button danger-button">REINICIAR EVENTO</button>
     </div>
 
     <div class="content-container">
       <div class="switcher tab-switcher">
-        <a href="#">Configuracion</a>
-        <a href="#">Equipo</a>
-        <a href="#">Rondas</a>
-        <a class="active" href="#">Clasificaciones</a>
+        <a href="../configuracion/configuracion.html">Configuracion</a>
+        <a href="../equipo/equipo.html">Equipo</a>
+        <a href="../rondas/rondas.html">Rondas</a>
+        <a href="#" class="active">Clasificaciones</a>
       </div>
-      
+
       <div class="content">
         <div class="switcher content-switcher">
           <a class="active" href="#">Escuelas</a>
