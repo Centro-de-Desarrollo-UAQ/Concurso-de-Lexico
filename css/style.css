@@ -130,6 +130,11 @@ p {
   background-color: var(--background-color);
 }
 
+.button:hover {
+  filter: brightness(0.9);
+  cursor: pointer;
+}
+
 .default-button {
   --background-color: var(--foreground-color);
   --text-color: var(--black-color);
@@ -187,6 +192,12 @@ p {
   padding: var(--buttonY-padding) var(--buttonX-padding);
 
   text-decoration: none;
+}
+
+.switcher > button:hover, a:hover {
+  background-color: color-mix(in srgb, var(--background-color) 30%, var(--active-background-color) 70%);
+  color: var(--active-text-color);
+  cursor: pointer;
 }
 
 .switcher > button.active, a.active {
