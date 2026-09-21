@@ -4,7 +4,7 @@ const PLAYERS_PER_MATCH = 4;
 
 const uid = prefix => `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 
-const initialData = () => ({
+export const initialData = () => ({
   eventName: "Concurso de Léxico",
   totalRounds: 5,
   teams: [],
@@ -34,6 +34,11 @@ const saveState = () => {
 
 // API Functions
 export const getData = () => dataState;
+
+export const setData = data => {
+  dataState = data;
+  saveState();
+};
 
 export const startTournament = () => {
   if (dataState.teams.length < 2) {
