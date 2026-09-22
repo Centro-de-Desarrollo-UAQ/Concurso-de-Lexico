@@ -1,0 +1,11 @@
+.position-card {
+  display: grid;
+  gap: var(--card-gap);
+  padding: var(--position-card-padding);
+}
+
+#positions-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--positions-gap);
+}
