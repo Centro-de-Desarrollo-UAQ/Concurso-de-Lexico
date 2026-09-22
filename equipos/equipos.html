@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexico - Equipos</title>
+
+  <link rel="stylesheet" href="equipos.css">
+</head>
+
+<body>
+  <div class="root">
+    <div class="title">
+      <img src="../imagen/title.svg" alt="">
+    </div>
+
+    <div class="main-buttons">
+      <button class="button default-button">EXPORTAR RESPALDO</button>
+      <button class="button default-button">IMPORTAR RESPALDO</button>
+      <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+      <button class="button danger-button">REINICIAR EVENTO</button>
+    </div>
+
+    <div class="content-container">
+      <div class="switcher tab-switcher">
+        <a href="#">Configuracion</a>
+        <a class="active" href="#">Equipo</a>
+        <a href="#">Rondas</a>
+        <a href="#">Clasificaciones</a>
+    </div>
+      
+    <div class="content">
+        <div class="card">
+            <h2>Registrar Equipo</h2>
+            <div class="form-row">
+
+              <div class="form-group">
+                <label>Escuela / Institución</label>
+                <input type="text" id="Escuela" class="input" placeholder="Ej. Preparatoria Norte">
+              </div>
+
+              <div class="form-group">
+                <label>Nombre o identificador del equipo</label>
+                <input type="text" id="Equipo" class="input" placeholder="Ej. Equipo A">
+              </div>
+
+            </div> 
+
+            <h2>Estudiantes</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="">Estudiante 1</label>
+                <input type="text" id="Estudiante1" class="input" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante1" class="input">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="">Estudiante 2</label>
+                <input type="text" id="Estudiante2" class="input" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante2" class="input">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>            
+
+
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="">Estudiante 3</label>
+                <input type="text" id="Estudiante3" class="input" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante3" class="input">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>            
+
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="">Estudiante 4</label>
+                <input type="text" id="Estudiante4" class="input" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante4" class="input">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="">Estudiante 5</label>
+                <input type="text" id="Estudiante5" class="input" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante5" class="input">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+              
+            <div  class="form-buttons">
+              <button id="guardarEquipo">Guardar Equipo</button>
+              <button id="limpiarCampos">Limpiar Campos</button>
+            </div>
+            
+            </div>
+
+            
+
+            <div class="card">
+              <h2>Equipos Registrados</h2>
+            </div>
+    </div>
+
+    
+        
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./equipos.js"></script>
+</body>
+
+</html>
