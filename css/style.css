@@ -35,6 +35,7 @@ body {
   --input-border-radius: 0.3125rem;
   --lexico-card-border-radius: 0.3125rem;
   --chip-border-radius: 0.625rem;
+  --podium-border-radius: 0.625rem;
 
   /* Gaps */
   --content-gap: 1.875rem;

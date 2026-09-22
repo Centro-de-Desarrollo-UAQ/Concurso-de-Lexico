@@ -104,30 +104,56 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const updateView = viewId => {
-    podium.innerHTML = "";
+  const renderPositions = (viewId, standings) => {
     positionsTable.innerHTML = "";
-
-    // TODO: Implement Podium Render
-
-    const standings = getStandings(viewId);
 
     const positionsElements = standings.map((entry, index) => {
       const entryElement = document.createElement("div");
       entryElement.classList.add("position-card", "card");
       entryElement.style = getStandingGridStyle(viewId);
-
+  
       entryElement.innerHTML = getStandingHTML(viewId, entry, index + 1);
       return entryElement;
     });
-
+  
     const headingElement = document.createElement("div");
     headingElement.classList.add("position-card", "card");
     headingElement.style = getStandingGridStyle(viewId);
     headingElement.innerHTML = getStandingHeadingHTML(viewId);
-
+  
     positionsTable.appendChild(headingElement);
     positionsElements.forEach(element => positionsTable.appendChild(element));
+  }
+
+  const renderPodium = (viewId, standings) => {
+    podium.innerHTML = "";
+
+    const podiumEntries = standings.slice(0, 3);
+
+    const podiumElements = podiumEntries.map((entry, index) => {
+      const podiumEntry = document.createElement("div");
+      podiumEntry.classList.add("podium-entry", `podium-${index + 1}`);
+      podiumEntry.innerHTML = /* html */ `
+        <p class="podium-number">${index + 1}</p>
+        <p class="text-xl">${entry.name || entry.school}</p>
+        <p class="text-bold">${entry.score} pts</p>
+      `;
+
+      return podiumEntry;
+    });
+
+    podium.appendChild(podiumElements[1]);
+    podium.appendChild(podiumElements[0]);
+    podium.appendChild(podiumElements[2]);
+  }
+
+  const updateView = viewId => {
+    podium.innerHTML = "";
+
+    const standings = getStandings(viewId);
+
+    renderPodium(viewId, standings);
+    renderPositions(viewId, standings);
   };
 
   /* Allow Values: schools, teams, students, male-students, female-students */
