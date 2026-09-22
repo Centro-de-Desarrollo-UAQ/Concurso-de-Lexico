@@ -7,8 +7,10 @@
   <title>Lexico - Clasificación</title>
 
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./clasificacion.css">
 
   <script src="../js/main-buttons.js" type="module"></script>
+  <script src="./clasificacion.js" type="module"></script>
 </head>
 
 <body>
@@ -26,7 +28,7 @@
 
     <div class="content-container">
       <div class="switcher tab-switcher">
-        <a href="../configuracion/configuracion.html">Configuracion</a>
+        <a href="../configuracion/configuracion.html">Configuración</a>
         <a href="../equipos/equipos.html">Equipos</a>
         <a href="../rondas/rondas.html">Rondas</a>
         <a href="#" class="active">Clasificaciones</a>
@@ -34,15 +36,17 @@
 
       <div class="content">
         <div class="switcher content-switcher">
-          <a class="active" href="#">Escuelas</a>
-          <a href="#">Equipos</a>
-          <a href="#">Estudiantes</a>
-          <a href="#">Estudiantes Masculinos</a>
-          <a href="#">Estudiantes Femeninos</a>
+          <button id="schools" class="active">Escuelas</a>
+          <button id="teams">Equipos</a>
+          <button id="students">Estudiantes</a>
+          <button id="male-students">Estudiantes Masculinos</a>
+          <button id="female-students">Estudiantes Femeninos</a>
         </div>
 
-        <div class="card">
-          <h2>Podium</h2>
+        <div id="podium" class="card">
+        </div>
+
+        <div id="positions-table">
         </div>
       </div>
     </div>
