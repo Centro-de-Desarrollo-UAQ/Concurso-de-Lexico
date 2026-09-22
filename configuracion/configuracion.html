@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>configuración - Concurso de Léxico</title>
+    <link rel="stylesheet" href="../css/style.css"> 
+
+</head>
+<body>
+    <div class="root">
+        <div class="title">
+            <img src="../imagen/title.svg" alt="">
+        </div>
+
+        <div class="main-buttons">
+            <button class="button default-button">EXPORTAR RESPALDO</button>
+            <button class="button default-button">IMPORTAR RESPALDO</button>
+            <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+            <button class="button danger-button">REINICIAR EVENTO</button>
+        </div>
+
+        <div class="content-container">
+            <div class="switcher tab-switcher">
+                <a class="active" href="#">Configuracion</a>
+                <a href="#">Equipo</a>
+                <a href="#">Rondas</a>
+                <a href="#">Clasificaciones</a>
+            </div>
+
+            <div class="content">
+                <div class="card">
+                    <h2>Configuración del evento</h2>
+                    <form>
+                        <label>Nombre del evento</label>
+                        <input type="text">
+                        <label>Numero de rondas</label>
+                        <input type="text">
+                        <br>     
+                        <button class="button accent-button">Guardar Configuracion</button>
+                    </form>
+                </div>
+
+            <div class="card">
+                <h2>Reglas aplicadas por el sistema</h2>
+                <ul>
+                    <li>La ronda 1 se genera de forma aleatoria.</li>
+                    <li>A partir de la ronda 2, los equipos se ordenan por puntaje acumulado.</li>
+                    <li>Un equipo no puede enfrentarse a otro de la misma escuela.</li>
+                    <li>Cuando el rival inmediato pertenece a la misma escuela, se busca el siguiente mejor equipo compatible.</li>
+                    <li>El sistema intenta evitar además repetir rivales de rondas anteriores; si no existe otra solución, permite la revancha, pero nunca un cruce entre la misma escuela.</li>
+                    <li>En cada ronda compiten exactamente 4 de los 5 estudiantes de cada equipo.</li>
+                    <li>El puntaje del equipo en una ronda es la suma de los cuatro puntajes individuales.</li>
+                    <li>Si hay un número impar de equipos, uno recibe descanso (BYE); no suma puntos en esa ronda.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
