@@ -1,3 +1,16 @@
+:root {
+  --podium-1-bg-color: #8d7624;
+  --podium-2-bg-color: #848c8e;
+  --podium-3-bg-color: #793929;
+
+  --podium-1-height: 28rem;
+  --podium-2-height: 25rem;
+  --podium-3-height: 22rem;
+
+  --podium-text-color: var(--white-color);
+  --podium-card-gap: 0.3rem;
+}
+
 .position-card {
   display: grid;
   gap: var(--card-gap);
@@ -8,4 +21,65 @@
   display: flex;
   flex-direction: column;
   gap: var(--positions-gap);
+}
+
+#podium {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  gap: var(--podium-gap);
+
+  max-width: 720px;
+  width: 100%
+}
+
+.podium-number {
+  font-size: var(--podium-number-font-size);
+  font-weight: bold;
+}
+
+.podium-entry {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  border-radius: var(--podium-border-radius);
+  gap: var(--podium-card-gap);
+  text-align: center;
+}
+
+.podium-entry > p {
+  color: var(--podium-text-color);
+  margin: 0;
+  width: 100%;
+  word-wrap: break-word; /* Si el nombre es muy largo, hará wrap limpiamente hacia arriba */
+}
+
+.podium-1 {
+  height: var(--podium-1-height);
+  background-image: linear-gradient(
+    to bottom,
+    var(--podium-1-bg-color) 60%,
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.podium-2 {
+  height: var(--podium-2-height);
+  background-image: linear-gradient(
+    to bottom,
+    var(--podium-2-bg-color) 70%,
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.podium-3 {
+  height: var(--podium-3-height);
+  background-image: linear-gradient(
+    to bottom,
+    var(--podium-3-bg-color) 80%,
+    rgba(255, 255, 255, 0)
+  );
 }
