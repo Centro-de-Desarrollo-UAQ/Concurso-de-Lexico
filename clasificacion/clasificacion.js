@@ -105,8 +105,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   const renderPositions = (viewId, standings) => {
-    positionsTable.innerHTML = "";
-
     const positionsElements = standings.map((entry, index) => {
       const entryElement = document.createElement("div");
       entryElement.classList.add("position-card", "card");
@@ -126,8 +124,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   const renderPodium = (viewId, standings) => {
-    podium.innerHTML = "";
-
     const podiumEntries = standings.slice(0, 3);
 
     const podiumElements = podiumEntries.map((entry, index) => {
@@ -147,10 +143,24 @@ window.addEventListener("DOMContentLoaded", () => {
     podium.appendChild(podiumElements[2]);
   }
 
+  const renderNoTeamsAdvice = () => {
+    const adviceElement = document.createElement("h3");
+    adviceElement.classList.add("text-center", "text-bold");
+    adviceElement.textContent = "No hay equipos registrados. Por favor, registre equipos para ver la clasificación.";
+
+    podium.appendChild(adviceElement);
+  };
+
   const updateView = viewId => {
     podium.innerHTML = "";
+    positionsTable.innerHTML = "";
 
     const standings = getStandings(viewId);
+
+    if (standings.length === 0) {
+      renderNoTeamsAdvice();
+      return;
+    }
 
     renderPodium(viewId, standings);
     renderPositions(viewId, standings);
