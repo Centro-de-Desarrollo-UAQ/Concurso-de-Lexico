@@ -94,6 +94,10 @@ p {
   font-weight: bold;
 }
 
+.text-center {
+  text-align: center;
+}
+
 /* Components */
 .root {
   display: flex;
