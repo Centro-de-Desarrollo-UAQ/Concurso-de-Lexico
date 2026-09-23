@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   margin: 0;
@@ -15,18 +15,19 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 
+  background-color: var(--primary-color);
+
   overflow-x: hidden;
 }
 
-
 :root {
   /* Colors */
-  --primary-color: #421D0B;
-  --secondary-color: #E5E1D7;
-  --foreground-color: #D9D9D9;
+  --primary-color: #421d0b;
+  --secondary-color: #e5e1d7;
+  --foreground-color: #d9d9d9;
   --accent-color: #326771;
-  --danger-color: #D23E11;
-  --white-color: #F2F2F2;
+  --danger-color: #d23e11;
+  --white-color: #f2f2f2;
   --black-color: #292929;
 
   /* Border Radius */
@@ -126,7 +127,7 @@ p {
   --background-color: var(--foreground-color);
   --text-color: var(--black-color);
   --border-color: var(--black-color);
-  
+
   font-size: var(--base-font-size);
   font-weight: bold;
   color: var(--text-color);
@@ -169,7 +170,7 @@ p {
   --active-background-color: var(--primary-color);
   --text-color: var(--black-color);
   --active-text-color: var(--white-color);
-  
+
   display: flex;
   gap: var(--switcher-gap);
   padding: var(--switcher-padding-y) var(--switcher-padding-x);
@@ -191,7 +192,8 @@ p {
   --active-text-color: var(--white-color);
 }
 
-.switcher > button, .switcher > a {
+.switcher > button,
+.switcher > a {
   border-radius: var(--border-radius);
   color: var(--text-color);
   background-color: var(--background-color);
@@ -208,13 +210,19 @@ p {
   text-decoration: none;
 }
 
-.switcher > button:hover, .switcher > a:hover {
-  background-color: color-mix(in srgb, var(--background-color) 30%, var(--active-background-color) 70%);
+.switcher > button:hover,
+.switcher > a:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--background-color) 30%,
+    var(--active-background-color) 70%
+  );
   color: var(--active-text-color);
   cursor: pointer;
 }
 
-.switcher > button.active, .switcher > a.active {
+.switcher > button.active,
+.switcher > a.active {
   background-color: var(--active-background-color);
   color: var(--active-text-color);
 }
@@ -247,4 +255,17 @@ p {
   border-radius: var(--border-radius);
 
   background-color: var(--secondary-color);
+}
+
+/* Print */
+@media print {
+  body {
+    background: #FFFFFF;
+  }
+
+  .main-buttons,
+  .switcher,
+  .no-print {
+    display: none;
+  }
 }

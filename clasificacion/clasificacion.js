@@ -3,6 +3,7 @@ import { getSchoolStandings, getTeamStandings, getStudentStandings } from "../js
 window.addEventListener("DOMContentLoaded", () => {
   const podium = document.getElementById("podium");
   const positionsTable = document.getElementById("positions-table");
+  const printDetails = document.getElementById("print-details");
 
   const getStandings = viewId => {
     switch (viewId) {
@@ -16,6 +17,21 @@ window.addEventListener("DOMContentLoaded", () => {
         return getStudentStandings().filter(student => student.gender === "male");
       case "female-students":
         return getStudentStandings().filter(student => student.gender === "female");
+    }
+  };
+
+  const getName = viewId => {
+    switch (viewId) {
+      case "schools":
+        return "Escuelas";
+      case "teams":
+        return "Equipos";
+      case "students":
+        return "Estudiantes";
+      case "male-students":
+        return "Estudiantes Masculinos";
+      case "female-students":
+        return "Estudiantes Femeninos";
     }
   };
 
@@ -151,9 +167,17 @@ window.addEventListener("DOMContentLoaded", () => {
     podium.appendChild(adviceElement);
   };
 
+  const renderPrintDetails = (viewId) => {
+    printDetails.innerHTML = /* html */ `
+      <h1 class="text-center text-2xl text-bold">Clasificación de ${getName(viewId)}</h1>
+      <p class="text-center">Generado el ${new Date().toLocaleDateString()}</p>
+    `;
+  }
+
   const updateView = viewId => {
     podium.innerHTML = "";
     positionsTable.innerHTML = "";
+    printDetails.innerHTML = "";
 
     const standings = getStandings(viewId);
 
@@ -164,6 +188,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     renderPodium(viewId, standings);
     renderPositions(viewId, standings);
+    renderPrintDetails(viewId);
   };
 
   /* Allow Values: schools, teams, students, male-students, female-students */
