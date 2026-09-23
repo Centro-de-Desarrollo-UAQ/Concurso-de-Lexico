@@ -163,6 +163,8 @@ p {
 .main-buttons {
   display: flex;
   gap: var(--switcher-gap);
+
+  overflow-x: auto;
 }
 
 .switcher {
@@ -176,6 +178,8 @@ p {
   padding: var(--switcher-padding-y) var(--switcher-padding-x);
   background-color: var(--background-color);
   border-radius: var(--border-radius);
+
+  overflow-x: auto;
 }
 
 .tab-switcher {
