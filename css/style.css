@@ -9,7 +9,7 @@
 body {
   font-family: "Poppins", Arial, sans-serif;
   font-size: var(--base-font-size);
-  background-image: url("../imagen/wood.jpg");
+  background-image: url("../imagen/wood.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
