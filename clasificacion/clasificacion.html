@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexico - Clasificación</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./clasificacion.css">
+
+  <script src="../js/main-buttons.js" type="module"></script>
+  <script src="./clasificacion.js" type="module"></script>
+</head>
+
+<body>
+  <div class="root">
+    <div class="title">
+      <img src="../imagen/title.svg" alt="">
+    </div>
+
+    <div class="main-buttons">
+      <button id="export-button" class="button default-button">EXPORTAR RESPALDO</button>
+      <button id="import-button" class="button default-button">IMPORTAR RESPALDO</button>
+      <button id="print-button" class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+      <button id="reset-button" class="button danger-button">REINICIAR EVENTO</button>
+    </div>
+
+    <div class="content-container">
+      <div class="switcher tab-switcher">
+        <a href="../configuracion/configuracion.html">Configuración</a>
+        <a href="../equipos/equipos.html">Equipos</a>
+        <a href="../rondas/rondas.html">Rondas</a>
+        <a href="#" class="active">Clasificaciones</a>
+      </div>
+
+      <div class="content">
+        <div class="switcher content-switcher">
+          <button id="schools" class="active">Escuelas</button>
+          <button id="teams">Equipos</button>
+          <button id="students">Estudiantes</button>
+          <button id="male-students">Estudiantes Masculinos</button>
+          <button id="female-students">Estudiantes Femeninos</button>
+        </div>
+
+        <div id="clasification-print-zone">
+          <div id="print-details" class="card"></div>
+          
+          <div class="card no-print" style="align-items: center;">
+            <div id="podium"></div>
+          </div>
+
+          <div id="positions-table">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

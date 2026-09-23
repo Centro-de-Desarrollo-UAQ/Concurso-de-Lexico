@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   margin: 0;
@@ -8,24 +8,26 @@
 
 body {
   font-family: "Poppins", Arial, sans-serif;
-  background-image: url("../imagen/wood.jpg");
+  font-size: var(--base-font-size);
+  background-image: url("../imagen/wood.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 
+  background-color: var(--primary-color);
+
   overflow-x: hidden;
 }
 
-
 :root {
   /* Colors */
-  --primary-color: #421D0B;
-  --secondary-color: #E5E1D7;
-  --foreground-color: #D9D9D9;
+  --primary-color: #421d0b;
+  --secondary-color: #e5e1d7;
+  --foreground-color: #d9d9d9;
   --accent-color: #326771;
-  --danger-color: #D23E11;
-  --white-color: #F2F2F2;
+  --danger-color: #d23e11;
+  --white-color: #f2f2f2;
   --black-color: #292929;
 
   /* Border Radius */
@@ -34,6 +36,7 @@ body {
   --input-border-radius: 0.3125rem;
   --lexico-card-border-radius: 0.3125rem;
   --chip-border-radius: 0.625rem;
+  --podium-border-radius: 0.625rem;
 
   /* Gaps */
   --content-gap: 1.875rem;
@@ -92,6 +95,10 @@ p {
   font-weight: bold;
 }
 
+.text-center {
+  text-align: center;
+}
+
 /* Components */
 .root {
   display: flex;
@@ -120,7 +127,7 @@ p {
   --background-color: var(--foreground-color);
   --text-color: var(--black-color);
   --border-color: var(--black-color);
-  
+
   font-size: var(--base-font-size);
   font-weight: bold;
   color: var(--text-color);
@@ -128,6 +135,11 @@ p {
   border-radius: var(--button-border-radius);
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
+}
+
+.button:hover {
+  filter: brightness(0.9);
+  cursor: pointer;
 }
 
 .default-button {
@@ -151,6 +163,8 @@ p {
 .main-buttons {
   display: flex;
   gap: var(--switcher-gap);
+
+  overflow-x: auto;
 }
 
 .switcher {
@@ -158,12 +172,14 @@ p {
   --active-background-color: var(--primary-color);
   --text-color: var(--black-color);
   --active-text-color: var(--white-color);
-  
+
   display: flex;
   gap: var(--switcher-gap);
   padding: var(--switcher-padding-y) var(--switcher-padding-x);
   background-color: var(--background-color);
   border-radius: var(--border-radius);
+
+  overflow-x: auto;
 }
 
 .tab-switcher {
@@ -180,16 +196,37 @@ p {
   --active-text-color: var(--white-color);
 }
 
-.switcher > button, a {
+.switcher > button,
+.switcher > a {
   border-radius: var(--border-radius);
   color: var(--text-color);
+  background-color: var(--background-color);
+
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: inherit;
+  line-height: inherit;
+
+  border: 0;
 
   padding: var(--buttonY-padding) var(--buttonX-padding);
 
   text-decoration: none;
 }
 
-.switcher > button.active, a.active {
+.switcher > button:hover,
+.switcher > a:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--background-color) 30%,
+    var(--active-background-color) 70%
+  );
+  color: var(--active-text-color);
+  cursor: pointer;
+}
+
+.switcher > button.active,
+.switcher > a.active {
   background-color: var(--active-background-color);
   color: var(--active-text-color);
 }
@@ -222,4 +259,17 @@ p {
   border-radius: var(--border-radius);
 
   background-color: var(--secondary-color);
+}
+
+/* Print */
+@media print {
+  body {
+    background: #FFFFFF;
+  }
+
+  .main-buttons,
+  .switcher,
+  .no-print {
+    display: none;
+  }
 }
