@@ -49,7 +49,17 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   printButton.addEventListener("click", () => {
-    // TODO:
+    const printZone = document.getElementById("clasification-print-zone");
+
+    if(!printZone) {
+      window.location.href = "clasificacion.html";
+
+      document.getElementById("print-button").click();
+      return;
+    }
+
+      window.print();
+    
   });
 
   resetButton.addEventListener("click", () => {

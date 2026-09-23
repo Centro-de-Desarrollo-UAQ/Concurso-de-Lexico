@@ -11,6 +11,12 @@
   --podium-card-gap: 0.3rem;
 }
 
+#clasification-print-zone {
+  display: flex;
+  gap: var(--content-gap);
+  flex-direction: column;
+}
+
 .position-card {
   display: grid;
   gap: var(--card-gap);
@@ -31,7 +37,7 @@
   gap: var(--podium-gap);
 
   max-width: 720px;
-  width: 100%
+  width: 100%;
 }
 
 .podium-number {
@@ -44,10 +50,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   border-radius: var(--podium-border-radius);
   gap: var(--podium-card-gap);
   text-align: center;
+  overflow: hidden;
 }
 
 .podium-entry > p {
@@ -82,4 +89,20 @@
     var(--podium-3-bg-color) 80%,
     rgba(255, 255, 255, 0)
   );
+}
+
+#print-details {
+  display: none;
+}
+
+/* Print */
+@media print {
+
+  #podium {
+    display: none;
+  }
+
+  #print-details {
+    display: block;
+  }
 }
