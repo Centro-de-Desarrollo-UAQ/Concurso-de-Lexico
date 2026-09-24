@@ -13,14 +13,25 @@
   <div class="root">
     <div class="title">
       <img src="../imagen/title.svg" alt="">
-    </div>
+  </div>
 
-    <div class="main-buttons">
-      <button class="button default-button">EXPORTAR RESPALDO</button>
-      <button class="button default-button">IMPORTAR RESPALDO</button>
-      <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
-      <button class="button danger-button">REINICIAR EVENTO</button>
-    </div>
+  <div class="main-buttons">
+    <button id="export-button" class="button default-button">
+      EXPORTAR RESPALDO
+    </button>
+
+    <button id="import-button" class="button default-button">
+      IMPORTAR RESPALDO
+    </button>
+
+    <button id="print-button" class="button default-button">
+      IMPRIMIR CLASIFICACIONES
+    </button>
+
+    <button id="reset-button" class="button danger-button">
+      REINICIAR EVENTO
+    </button>
+  </div>
 
     <div class="content-container">
       <div class="switcher tab-switcher">
@@ -48,15 +59,15 @@
             </div> 
 
             <h2>Estudiantes</h2>
-            <div class="form-row">
+            <div class="form-row-estudiantes">
               <div class="form-group">
                 <label for="">Estudiante 1</label>
-                <input type="text" id="Estudiante1" class="input" placeholder="Nombre Completo">
+                <input type="text" id="Estudiante1" placeholder="Nombre Completo">
               </div>
 
               <div class="form-group">
                 <label for="">Sexo</label>
-                <select id="sexoEstudiante1" class="input">
+                <select id="sexoEstudiante1" >
                   <option value="Seleccionar">Seleccionar</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
@@ -66,15 +77,15 @@
             </div>
 
 
-            <div class="form-row">
+            <div class="form-row-estudiantes">
               <div class="form-group">
                 <label for="">Estudiante 2</label>
-                <input type="text" id="Estudiante2" class="input" placeholder="Nombre Completo">
+                <input type="text" id="Estudiante2" placeholder="Nombre Completo">
               </div>
 
               <div class="form-group">
                 <label for="">Sexo</label>
-                <select id="sexoEstudiante2" class="input">
+                <select id="sexoEstudiante2" >
                   <option value="Seleccionar">Seleccionar</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
@@ -85,15 +96,15 @@
 
 
 
-            <div class="form-row">
+            <div class="form-row-estudiantes">
               <div class="form-group">
                 <label for="">Estudiante 3</label>
-                <input type="text" id="Estudiante3" class="input" placeholder="Nombre Completo">
+                <input type="text" id="Estudiante3" placeholder="Nombre Completo">
               </div>
 
               <div class="form-group">
                 <label for="">Sexo</label>
-                <select id="sexoEstudiante3" class="input">
+                <select id="sexoEstudiante3">
                   <option value="Seleccionar">Seleccionar</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
@@ -103,15 +114,15 @@
             </div>            
 
             
-            <div class="form-row">
+            <div class="form-row-estudiantes">
               <div class="form-group">
                 <label for="">Estudiante 4</label>
-                <input type="text" id="Estudiante4" class="input" placeholder="Nombre Completo">
+                <input type="text" id="Estudiante4" placeholder="Nombre Completo">
               </div>
 
               <div class="form-group">
                 <label for="">Sexo</label>
-                <select id="sexoEstudiante4" class="input">
+                <select id="sexoEstudiante4">
                   <option value="Seleccionar">Seleccionar</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
@@ -121,15 +132,15 @@
             </div>
 
 
-            <div class="form-row">
+            <div class="form-row-estudiantes">
               <div class="form-group">
                 <label for="">Estudiante 5</label>
-                <input type="text" id="Estudiante5" class="input" placeholder="Nombre Completo">
+                <input type="text" id="Estudiante5" placeholder="Nombre Completo">
               </div>
 
               <div class="form-group">
                 <label for="">Sexo</label>
-                <select id="sexoEstudiante5" class="input">
+                <select id="sexoEstudiante5" >
                   <option value="Seleccionar">Seleccionar</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Masculino">Masculino</option>
@@ -148,8 +159,17 @@
             
 
             <div class="card">
-              <h2>Equipos Registrados</h2>
+              <div id="row">
+                <h2>Equipos Registrados</h2>
+                <button id="iniciarEvento">Iniciar evento y generar ronda</button>
+              </div>
+              
+              <div id="equiposRegistrados"></div>
             </div>
+
+  
+
+            
     </div>
 
     

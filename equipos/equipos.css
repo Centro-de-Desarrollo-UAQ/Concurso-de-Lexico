@@ -231,11 +231,20 @@ label{
   padding: 10px;
   border-radius: var(--input-border-radius);
   height: 46px;
+  background-color: var(--secondary-color);
+  font-family:var(--base-font-size);
+  border: 1px solid black;
 }
 .form-row {
   display: flex;
   gap: var(--form-gap);
   height: 108px;
+}
+.form-row-estudiantes{
+  display: flex;
+  gap: var(--form-gap);
+  height: 108px;
+  margin-bottom: -2em;
 }
 
 .form-group {
@@ -249,21 +258,35 @@ label{
   display: block;
 }
 
-#Estudiante{
-  width: 740px;
-}
-select{
-  height: 46px;
+#Estudiante1, #Estudiante2, #Estudiante3, #Estudiante4, #Estudiante5{
+  width: 820px;
+  height: 39px;
   border-radius: var(--input-border-radius);
+  border:1px solid black;
+  background-color:var(--secondary-color);
+  padding: 10px;
+  font-family:var(--base-font-size);
+}
+
+select{
+  height: 39px;
+  width: 348px;
+  border-radius: var(--input-border-radius);
+  background-color:var(--secondary-color);
+  padding: 10px;
+  font-family:var(--base-font-size);
 }
 #guardarEquipo{
   width: 170px;
   height: 46px;
   padding: 10px;
   border-radius: var(--button-border-radius);
-  background-color:#326771;
+  background-color:#421D0B;
   color: white;
   border-color: #421D0B;
+  border: 1px solid;
+  font-family:var(--base-font-size);
+  
 }
 
 #limpiarCampos{
@@ -271,11 +294,156 @@ select{
   height: 46px;
   padding: 10px;
   border-radius: var(--button-border-radius);
-  background-color:#D23E11;
+  background-color:#CCA67C;
   color: white;
+  border: 1px solid;
   border-color: #421D0B;
+  font-family:var(--base-font-size);
 }
 .form-buttons {
     display: flex;
     gap: 30px;
+    margin-top: 2em;
+}
+#iniciarEvento{
+  height: 46px;
+  border-radius: var(--button-border-radius);
+  color: white;
+  background-color: #421D0B;
+  width: 250px;
+  border: 1px solid;
+  border-color: #421D0B;
+  font-family:var(--base-font-size);
+}
+#row{
+  display: flex;
+  gap: 42em;
+}
+
+/* TARJETAS DE EQUIPOS */
+
+#equiposRegistrados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+
+.tarjeta-equipo {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius:var(--border-radius);
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+
+
+
+
+
+
+
+.equipo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.equipo-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 20px;
+}
+
+
+.equipo-header p {
+    margin: 0;
+    color: #666;
+}
+
+
+.equipo-header span {
+    font-size: 14px;
+    color: #777;
+}
+
+
+
+
+
+
+.tabla-estudiantes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+
+.tabla-estudiantes th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.tabla-estudiantes td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+.tabla-estudiantes th:first-child,
+.tabla-estudiantes td:first-child {
+    width: 50px;
+    text-align: center;
+}
+
+
+.tabla-estudiantes th:last-child,
+.tabla-estudiantes td:last-child {
+    width: 150px;
+}
+
+
+
+
+.acciones-equipo {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+.acciones-equipo button {
+    padding: 8px 16px;
+    border:var(--border-color);
+    border-radius: var(--button-border-radius);
+    font-size: 14px;
+    font-family:var(--base-font-size);
+}
+
+
+.editar-equipo {
+    background-color: var(--secondary-color);
+}
+
+
+.editar-equipo:hover {
+    background-color:#421D0B;
+    color: white;
+}
+
+
+.eliminar-equipo {
+    background-color:#CCA67C;
+}
+
+
+.eliminar-equipo:hover {
+    background-color:#421D0B;
+    color: white;
 }
