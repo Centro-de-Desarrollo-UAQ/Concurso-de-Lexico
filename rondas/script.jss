@@ -1,6 +1,5 @@
 const config = JSON.parse(localStorage.getItem("lexico_config")) || { numRondas: 5 };
-l
-et rondas = JSON.parse(localStorage.getItem("lexico_rondas")) || [];
+l   et rondas = JSON.parse(localStorage.getItem("lexico_rondas")) || [];
 
 let equipos = JSON.parse(localStorage.getItem("lexico_equipos"));
 
