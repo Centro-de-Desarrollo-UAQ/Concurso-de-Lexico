@@ -33,11 +33,13 @@
                     <h2>Configuración del evento</h2>
                     <form>
                         <label>Nombre del evento</label>
-                        <input type="text">
                         <label>Numero de rondas</label>
-                        <input type="text">
-                        <br>     
-                        <button class="button accent-button">Guardar Configuracion</button>
+                        <br>
+                        <input type="text" id="nameEvent">
+                        <input type="number" id="totalRounds">
+                        <br> 
+                        <br>    
+                        <button class="button accent-button" id="btnConfiguration">Guardar Configuracion</button>
                     </form>
                 </div>
 
@@ -56,5 +58,6 @@
             </div>
         </div>
     </div>
+    <script type="module" src="../configuracion.js"></script>
 </body>
 </html>
