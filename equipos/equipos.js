@@ -1,4 +1,4 @@
-import { addTeam, getTeams, editTeam, deleteTeam, startTournament } from "../js/data.js";
+import { addTeam, getTeams, editTeam, deleteTeam, startTournament, getData, setData, initialData } from "../js/data.js";
 
 console.log("equipos.js conectado");
 
@@ -158,9 +158,7 @@ function mostrarEquipos() {
 
     if (equipos.length === 0) {
 
-        equiposRegistrados.innerHTML = `
-            <p>No hay equipos registrados todavía.</p>
-        `;
+        equiposRegistrados.innerHTML = `<p>No hay equipos registrados todavía.</p>`;
 
         return;
     }
@@ -270,9 +268,7 @@ function mostrarEquipos() {
 }
 
 
-// ==========================================
-// CARGAR EQUIPO PARA EDITAR
-// ==========================================
+
 
 function cargarEquipoParaEditar(equipo) {
 
@@ -330,9 +326,7 @@ function cargarEquipoParaEditar(equipo) {
 }
 
 
-// ==========================================
-// ELIMINAR EQUIPO
-// ==========================================
+
 
 function eliminarEquipo(teamId) {
 
@@ -365,9 +359,7 @@ function eliminarEquipo(teamId) {
 }
 
 
-// ==========================================
-// LIMPIAR CAMPOS
-// ==========================================
+
 
 limpiarButton.addEventListener("click", function () {
 
@@ -404,14 +396,12 @@ function limpiarCampos() {
 }
 
 
-// ==========================================
-// INICIAR EVENTO
-// ==========================================
+
 
 iniciarButton.addEventListener("click", function () {
 
     const confirmar = confirm(
-        "¿Quieres iniciar el evento y generar la ronda?"
+        "Al iniciar, los equipos y la configuración quedarán bloqueados. ¿Desea continuar?"
     );
 
 
