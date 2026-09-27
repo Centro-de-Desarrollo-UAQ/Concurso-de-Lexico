@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>configuración - Concurso de Léxico</title>
     <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="configuracion.css"> 
+
+    <script type="module" src="configuracion.js"></script>
+    <script type="module" src="../js/main-buttons.js"></script>
 
 </head>
 <body>
@@ -14,34 +18,40 @@
         </div>
 
         <div class="main-buttons">
-            <button class="button default-button">EXPORTAR RESPALDO</button>
-            <button class="button default-button">IMPORTAR RESPALDO</button>
-            <button class="button default-button">IMPRIMIR CLASIFICACIONES</button>
-            <button class="button danger-button">REINICIAR EVENTO</button>
+            <button id="export-button" class="button default-button">EXPORTAR RESPALDO</button>
+            <button id="import-button" class="button default-button">IMPORTAR RESPALDO</button>
+            <button id="print-button" class="button default-button">IMPRIMIR CLASIFICACIONES</button>
+            <button id="reset-button" class="button danger-button">REINICIAR EVENTO</button>
         </div>
 
         <div class="content-container">
             <div class="switcher tab-switcher">
                 <a class="active" href="#">Configuracion</a>
-                <a href="#">Equipo</a>
-                <a href="#">Rondas</a>
-                <a href="#">Clasificaciones</a>
+                <a href="../equipos/equipos.html">Equipo</a>
+                <a href="../rondas/rondas.html">Rondas</a>
+                <a href="../clasificacion/clasificacion.html">Clasificaciones</a>
             </div>
 
             <div class="content">
                 <div class="card">
                     <h2>Configuración del evento</h2>
-                    <form>
-                        <label>Nombre del evento</label>
-                        <label>Numero de rondas</label>
-                        <br>
-                        <input type="text" id="nameEvent">
-                        <input type="number" id="totalRounds">
-                        <br> 
-                        <br>    
-                        <button class="button accent-button" id="btnConfiguration">Guardar Configuracion</button>
+                    <form id="formConfiguration">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="nameEvent">Nombre del evento</label>
+                                <input type="text" id="nameEvent" placeholder="Concurso de Lexico">
+                            </div>
+                            <div class="input-group">
+                                <label for="totalRounds">Numero de rondas</label>
+                                <input type="number" id="totalRounds" placeholder="5">
+                            </div>
+
+                        </div>
+                       
+                        <button type="submit" class="button accent-button">Guardar Configuracion</button>
                     </form>
                 </div>
+            </div>
 
             <div class="card">
                 <h2>Reglas aplicadas por el sistema</h2>
@@ -58,6 +68,19 @@
             </div>
         </div>
     </div>
-    <script type="module" src="../configuracion.js"></script>
+
+    <div id="custom-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h3 id="modal-title">Confirmar acción</h3>
+            <p id="modal-message">¿Estás seguro de que deseas guardar la configuración?</p>
+            
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="button default-button">Cancelar</button>
+                <button id="modal-confirm-btn" class="button accent-button">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    
+    
 </body>
 </html>
