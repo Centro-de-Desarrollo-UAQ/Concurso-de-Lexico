@@ -51,39 +51,3 @@
     justify-content: center;
     z-index: 1000;
 }
-
-/* Ocultar modal */
-.hidden {
-    display: none !important;
-}
-
-/* Tarjeta del Modal */
-.modal-card {
-    background-color: #f3efe6; /* Fondo beige claro */
-    border: 15px solid #421d0b; /* Marco café oscuro */
-    border-radius: 16px;       /* Esquinas redondeadas suaves */
-    padding: 24px;
-    width: 90%;
-    max-width: 420px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); /* Sombra para darle profundidad */
-    text-align: center;
-}
-.modal-card h3 {
-    margin-top: 0;
-    color: #2b231d;
-    font-size: 1.25rem;
-}
-
-.modal-card p {
-    color: #4a3b32;
-    font-size: 0.95rem;
-    margin: 16px 0 24px 0;
-    white-space: pre-line; /* Permite saltos de línea */
-}
-
-/* Botones del modal */
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
