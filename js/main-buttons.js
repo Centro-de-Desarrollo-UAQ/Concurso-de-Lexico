@@ -32,12 +32,12 @@ window.addEventListener("DOMContentLoaded", () => {
     input.type = "file";
     input.accept = ".json";
 
-    input.addEventListener("change", async (e) => {
+    input.addEventListener("change", async e => {
       const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = async (e) => {
+      reader.onload = async e => {
         try {
           const data = JSON.parse(e.target.result);
           setData(data);
@@ -56,9 +56,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const printZone = document.getElementById("clasification-print-zone");
 
     if (!printZone) {
-      window.location.href = "clasificacion.html";
+      window.location.href = "../clasificacion/clasificacion.html?print=true";
 
-      document.getElementById("print-button").click();
       return;
     }
 
@@ -70,6 +69,18 @@ window.addEventListener("DOMContentLoaded", () => {
       setData(initialData());
     }
   });
+
+  if (window.location.search.includes("print=true")) {
+    const printZone = document.getElementById("clasification-print-zone");
+
+    if (printZone) {
+      printButton.click();
+    }
+
+    const url = new URL(window.location);
+    url.searchParams.delete("print");
+    window.history.replaceState({}, document.title, url.toString());
+  }
 });
 
 function injectConfirmModal() {
