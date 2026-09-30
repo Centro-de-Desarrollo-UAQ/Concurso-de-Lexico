@@ -69,6 +69,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
  // Función que simula el confirm() 
 export function confirmCustom(mensaje, titulo = "Confirmar acción") {
     return new Promise((resolve) => {
@@ -105,3 +106,4 @@ export function confirmCustom(mensaje, titulo = "Confirmar acción") {
         cancelBtn.addEventListener('click', handleCancel);
     });
 }
+

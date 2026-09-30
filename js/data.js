@@ -571,3 +571,4 @@ export const recordMatchResult = (roundId, pairingId, teamAScores, teamBScores) 
   saveState();
   return pairing;
 };
+

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexico - Equipos</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="equipos.css">
+</head>
+
+<body>
+  <div class="root">
+    <div class="title">
+      <img src="../imagen/title.svg" alt="">
+  </div>
+
+  <div class="main-buttons">
+    <button id="export-button" class="button default-button">
+      EXPORTAR RESPALDO
+    </button>
+
+    <button id="import-button" class="button default-button">
+      IMPORTAR RESPALDO
+    </button>
+
+    <button id="print-button" class="button default-button">
+      IMPRIMIR CLASIFICACIONES
+    </button>
+
+    <button id="reset-button" class="button danger-button">
+      REINICIAR EVENTO
+    </button>
+  </div>
+
+    <div class="content-container">
+      <div class="switcher tab-switcher">
+        <a href="../configuracion/configuracion.html">Configuracion</a>
+        <a class="active" href="equipos.html">Equipo</a>
+        <a href="../rondas/rondas.html">Rondas</a>
+        <a href="../clasificacion/clasificacion.html">Clasificaciones</a>
+    </div>
+      
+    <div class="content">
+        <div class="card">
+            <h2>Registrar Equipo</h2>
+            <div class="form-row">
+
+              <div class="form-group">
+                <label>Escuela / Institución</label>
+                <input type="text" id="Escuela" class="input" placeholder="Ej. Preparatoria Norte">
+              </div>
+
+              <div class="form-group">
+                <label>Nombre o identificador del equipo</label>
+                <input type="text" id="Equipo" class="input" placeholder="Ej. Equipo A">
+              </div>
+
+            </div> 
+
+            <h2>Estudiantes</h2>
+            <div class="form-row-estudiantes">
+              <div class="form-group">
+                <label for="">Estudiante 1</label>
+                <input type="text" id="Estudiante1" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante1" >
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+
+
+            <div class="form-row-estudiantes">
+              <div class="form-group">
+                <label for="">Estudiante 2</label>
+                <input type="text" id="Estudiante2" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante2" >
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>            
+
+
+
+            <div class="form-row-estudiantes">
+              <div class="form-group">
+                <label for="">Estudiante 3</label>
+                <input type="text" id="Estudiante3" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante3">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>            
+
+            
+            <div class="form-row-estudiantes">
+              <div class="form-group">
+                <label for="">Estudiante 4</label>
+                <input type="text" id="Estudiante4" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante4">
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+
+
+            <div class="form-row-estudiantes">
+              <div class="form-group">
+                <label for="">Estudiante 5</label>
+                <input type="text" id="Estudiante5" placeholder="Nombre Completo">
+              </div>
+
+              <div class="form-group">
+                <label for="">Sexo</label>
+                <select id="sexoEstudiante5" >
+                  <option value="Seleccionar">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                
+              </div>
+            </div>
+              
+            <div  class="form-buttons">
+              <button id="guardarEquipo">Guardar Equipo</button>
+              <button id="limpiarCampos">Limpiar Campos</button>
+            </div>
+            
+            </div>
+
+            
+
+            <div class="card">
+              <div id="row">
+                <h2>Equipos Registrados</h2>
+                <button id="iniciarEvento">Iniciar evento y generar ronda</button>
+              </div>
+              
+              <div id="equiposRegistrados"></div>
+            </div>
+
+  
+
+            
+    </div>
+
+    
+        
+      </div>
+
+      <div id="custom-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <h3 id="modal-title">Confirmar acción</h3>
+            <p id="modal-message">¿Estás seguro de realizar esta acción?</p>
+            
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="button default-button">Cancelar</button>
+                <button id="modal-confirm-btn" class="button accent-button">Aceptar</button>
+            </div>
+        </div>
+    </div>
+    </div>
+  
+  <script type="module" src="./equipos.js"></script>
+  <script type="module" src="../js/main-buttons.js"></script>"></script>
+</body>
+
+</html>
