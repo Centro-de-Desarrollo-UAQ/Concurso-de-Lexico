@@ -1,5 +1,5 @@
 import { addTeam, getTeams, editTeam, deleteTeam, startTournament, getData, setData, initialData } from "../js/data.js";
-import { confirmCustom } from "../js/main-buttons.js";
+import { confirmCustom, alertCustom } from "../js/main-buttons.js";
 
 console.log("equipos.js conectado");
 
@@ -61,7 +61,7 @@ guardarButton.addEventListener("click", async function () {
 
 
     if (!escuela || !nombreEquipo) {
-        alert("Escribe la escuela y el nombre del equipo.");
+        await alertCustom("Escribe la escuela y el nombre del equipo.");
         return;
     }
 
@@ -69,7 +69,7 @@ guardarButton.addEventListener("click", async function () {
     for (const estudiante of estudiantes) {
 
         if (!estudiante.name || !estudiante.gender) {
-            alert("Completa los datos de los 5 estudiantes.");
+            await alertCustom("Completa los datos de los 5 estudiantes.");
             return;
         }
 
@@ -99,7 +99,7 @@ guardarButton.addEventListener("click", async function () {
                 students: estudiantes
             });
 
-            alert("Equipo guardado correctamente.");
+            await alertCustom("Equipo guardado correctamente.");
 
         }
 
@@ -111,7 +111,7 @@ guardarButton.addEventListener("click", async function () {
                 students: estudiantes
             });
 
-            alert("Equipo actualizado correctamente.");
+            await alertCustom("Equipo actualizado correctamente.");
         }
 
 
@@ -121,7 +121,7 @@ guardarButton.addEventListener("click", async function () {
     } catch (error) {
 
         console.error(error);
-        alert(error.message);
+        await alertCustom(error.message);
 
     }
 
@@ -357,7 +357,7 @@ async function eliminarEquipo(teamId) {
 
         deleteTeam(teamId);
 
-        alert("Equipo eliminado correctamente.");
+        await alertCustom("Equipo eliminado correctamente.");
 
         mostrarEquipos();
 
@@ -365,7 +365,7 @@ async function eliminarEquipo(teamId) {
 
         console.error(error);
 
-        alert(error.message);
+        await alertCustom(error.message);
 
     }
 
@@ -427,7 +427,7 @@ iniciarButton.addEventListener("click", async function () {
 
         startTournament();
 
-        alert("Evento iniciado correctamente.");
+        await alertCustom("Evento iniciado correctamente.");
 
         mostrarEquipos();
 
@@ -435,7 +435,7 @@ iniciarButton.addEventListener("click", async function () {
 
         console.error(error);
 
-        alert(error.message);
+        await alertCustom(error.message);
 
     }
 
