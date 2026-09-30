@@ -179,15 +179,13 @@ p {
     --active-text-color: var(--white-color);
 }
 
-.switcher > button, a {
+.switcher > button,
+.switcher > a {
     border-radius: var(--border-radius);
     color: var(--text-color);
-
     padding: var(--buttonY-padding) var(--buttonX-padding);
-
     text-decoration: none;
 }
-
 /* Los botones de acción SÍ deben verse clickeables */
 .button {
     cursor: pointer;
@@ -240,10 +238,14 @@ p {
 }
 
 .content-points {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Crea exactamente 4 columnas iguales */
     gap: var(--switcher-gap);
+    width: 100%;
 }
 
 .content-points .card {
-    flex: 1;
+    /* Ya no necesitamos flex: 1; Grid se encarga del tamaño */
+    width: 100%; 
+    min-width: 0;
 }

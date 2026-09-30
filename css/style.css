@@ -273,3 +273,40 @@ p {
     display: none;
   }
 }
+
+/* Ocultar modal */
+.hidden {
+    display: none !important;
+}
+
+/* Tarjeta del Modal */
+.modal-card {
+    background-color: #f3efe6;
+    border: 15px solid #421d0b;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    text-align: center;
+}
+
+.modal-card h3 {
+    margin-top: 0;
+    color: #2b231d;
+    font-size: 1.25rem;
+}
+
+.modal-card p {
+    color: #4a3b32;
+    font-size: 0.95rem;
+    margin: 16px 0 24px 0;
+    white-space: pre-line;
+}
+
+/* Botones del modal */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
