@@ -31,7 +31,7 @@ let equipoEditando = null;
 
 
 
-guardarButton.addEventListener("click", function () {
+guardarButton.addEventListener("click", async function () {
 
     const escuela = escuelaInput.value.trim();
     const nombreEquipo = equipoInput.value.trim();
@@ -75,7 +75,20 @@ guardarButton.addEventListener("click", function () {
 
     }
 
+    const mensaje = equipoEditando === null
+        ? `¿Deseas guardar este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`
+        : `¿Deseas guardar los cambios de este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`;
 
+    const seguroDeGuardar = await confirmCustom(
+        mensaje,
+        equipoEditando === null ? "Guardar Equipo" : "Guardar cambios"
+    );
+
+    if (!seguroDeGuardar) {
+        return;
+    }
+
+    
     try {
 
         if (equipoEditando === null) {
@@ -329,12 +342,11 @@ function cargarEquipoParaEditar(equipo) {
 
 
 
-function eliminarEquipo(teamId) {
-
-    const confirmar = confirm(
-        "¿Seguro que quieres eliminar este equipo?"
+async function eliminarEquipo(teamId) {
+    const confirmar = await confirmCustom(
+        "¿Seguro que quieres eliminar este equipo?",
+        "Eliminar equipo"
     );
-
 
     if (!confirmar) {
         return;
@@ -399,12 +411,12 @@ function limpiarCampos() {
 
 
 
-iniciarButton.addEventListener("click", function () {
+iniciarButton.addEventListener("click", async function () {
 
-    const confirmar = confirm(
-        "Al iniciar, los equipos y la configuración quedarán bloqueados. ¿Desea continuar?"
+    const confirmar = await confirmCustom(
+        "Al iniciar, los equipos y la configuración quedarán bloqueados. ¿Desea continuar?",
+        "Iniciar evento"
     );
-
 
     if (!confirmar) {
         return;
