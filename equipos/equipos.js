@@ -1,4 +1,5 @@
 import { addTeam, getTeams, editTeam, deleteTeam, startTournament, getData, setData, initialData } from "../js/data.js";
+import { confirmCustom } from "../js/main-buttons.js";
 
 console.log("equipos.js conectado");
 
