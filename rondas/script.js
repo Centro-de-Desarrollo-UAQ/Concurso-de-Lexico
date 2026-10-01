@@ -6,6 +6,7 @@ import {
     generateRound,
     recordMatchResult
 } from "../js/data.js";
+import { alertCustom } from "../js/main-buttons.js";
 
 // ---------- Helpers para leer nombre/id de estudiante (igual que en data.js) ----------
 function getStudentId(team, student, index) {
@@ -23,11 +24,11 @@ function getStudentName(student) {
 let rondaSeleccionada = 1;
 
 // ---------- Generar siguiente ronda ----------
-document.getElementById("btnSiguienteRonda").addEventListener("click", () => {
+document.getElementById("btnSiguienteRonda").addEventListener("click", async () => {
     const data = getData();
 
     if (data.teams.length < 2) {
-        alert("Todavía no hay suficientes equipos registrados (se necesitan al menos 2).");
+        await alertCustom("Todavía no hay suficientes equipos registrados (se necesitan al menos 2).");
         return;
     }
 
@@ -35,14 +36,14 @@ document.getElementById("btnSiguienteRonda").addEventListener("click", () => {
         const nuevaRonda = generateRound();
         rondaSeleccionada = nuevaRonda.number;
     } catch (err) {
-        alert(err.message);
+        await alertCustom(err.message);
     }
 
     renderizarPantalla();
 });
 
 // ---------- Registrar puntajes de un enfrentamiento ----------
-function registrarEnfrentamiento(roundId, pairingId, tarjeta) {
+async function registrarEnfrentamiento(roundId, pairingId, tarjeta) {
     const checksIzq = tarjeta.querySelectorAll(".col-izq .check-participa");
     const inputsIzq = tarjeta.querySelectorAll(".col-izq .input-puntaje");
     const checksDer = tarjeta.querySelectorAll(".col-der .check-participa");
@@ -63,14 +64,14 @@ function registrarEnfrentamiento(roundId, pairingId, tarjeta) {
     });
 
     if (teamAScores.length !== 4 || teamBScores.length !== 4) {
-        alert("Cada equipo debe tener exactamente 4 de sus 5 integrantes marcados.");
+        await alertCustom("Cada equipo debe tener exactamente 4 de sus 5 integrantes marcados.");
         return;
     }
 
     try {
         recordMatchResult(roundId, pairingId, teamAScores, teamBScores);
     } catch (err) {
-        alert(err.message);
+        await alertCustom(err.message);
         return;
     }
 
