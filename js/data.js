@@ -465,6 +465,14 @@ export const generateRound = () => {
     throw new Error("Ya se generaron todas las rondas programadas.");
   }
 
+  if (dataState.teams.length < 2) {
+    throw new Error("Se necesitan al menos 2 equipos para generar una ronda.");
+  }
+
+  if (dataState.rounds.some(round => round.pairings.some(pairing => !pairing.completed))) {
+    throw new Error("No se puede generar una nueva ronda mientras haya enfrentamientos pendientes.");
+  }
+
   const roundNumber = dataState.rounds.length + 1;
   const orderedTeams = roundNumber === 1 ? shuffle(dataState.teams) : getTeamStandings();
   const roundPairings = buildPairings(orderedTeams);
