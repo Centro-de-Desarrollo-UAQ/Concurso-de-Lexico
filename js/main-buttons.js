@@ -67,6 +67,8 @@ window.addEventListener("DOMContentLoaded", () => {
   resetButton.addEventListener("click", async () => {
     if (await confirmCustom("¿Estás seguro de que quieres reiniciar el evento?")) {
       setData(initialData());
+
+      window.location.href = "../configuracion/configuracion.html";
     }
   });
 
