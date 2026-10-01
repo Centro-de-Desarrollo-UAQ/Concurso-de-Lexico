@@ -92,7 +92,7 @@ function generarSiguienteRonda() {
     const numeroRonda = rondas.length + 1;
 
     if (numeroRonda > LIMITE_RONDAS) {
-        alert("Ya se generaron todas las rondas programadas (" + LIMITE_RONDAS + ").");
+        await alertCustom("Ya se generaron todas las rondas programadas (" + LIMITE_RONDAS + ").");
         return;
     }
 
