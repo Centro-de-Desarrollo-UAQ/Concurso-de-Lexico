@@ -55,14 +55,14 @@
  * };
  */
 
-const STORAGE_KEY = "datos_torneo";
+const STORAGE_KEY = 'datos_torneo';
 const STUDENTS_PER_TEAM = 5;
 const PLAYERS_PER_MATCH = 4;
 
-const uid = prefix => `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
+const uid = (prefix) => `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 
 export const initialData = () => ({
-  eventName: "Concurso de Léxico",
+  eventName: 'Concurso de Léxico',
   totalRounds: 5,
   teams: [],
   rounds: [],
@@ -92,14 +92,14 @@ const saveState = () => {
 // API Functions
 export const getData = () => dataState;
 
-export const setData = data => {
+export const setData = (data) => {
   dataState = data;
   saveState();
 };
 
 export const startTournament = () => {
   if (dataState.teams.length < 2) {
-    throw new Error("Se necesitan al menos 2 equipos para iniciar el torneo.");
+    throw new Error('Se necesitan al menos 2 equipos para iniciar el torneo.');
   }
 
   dataState.started = true;
@@ -109,43 +109,52 @@ export const startTournament = () => {
   saveState();
 };
 
-export const setEventName = name => {
+export const setEventName = (name) => {
   dataState.eventName = name;
   saveState();
 };
 
 export const getEventName = () => dataState.eventName;
 
-export const setTotalRounds = rounds => {
+export const setTotalRounds = (rounds) => {
   dataState.totalRounds = rounds;
   saveState();
 };
 
 export const getTotalRounds = () => dataState.totalRounds;
 
-export const getTeam = teamId => dataState.teams.find(team => team.id === teamId);
+export const getTeam = (teamId) =>
+  dataState.teams.find((team) => team.id === teamId);
 
 export const getTeams = () => dataState.teams;
 
 export const addTeam = ({ school, name, students }) => {
   if (dataState.started) {
-    throw new Error("No se pueden agregar equipos después de que el torneo ha comenzado.");
+    throw new Error(
+      'No se pueden agregar equipos después de que el torneo ha comenzado.'
+    );
   }
 
   if (!school || !name || !students || students.length !== STUDENTS_PER_TEAM) {
-    throw new Error("Todos los campos son obligatorios y debe haber 5 estudiantes.");
+    throw new Error(
+      'Todos los campos son obligatorios y debe haber 5 estudiantes.'
+    );
   }
 
-  if (dataState.teams.some(team => team.school === school && team.name === name)) {
-    throw new Error("Ya existe un equipo con el mismo nombre y escuela.");
+  if (
+    dataState.teams.some((team) => team.school === school && team.name === name)
+  ) {
+    throw new Error('Ya existe un equipo con el mismo nombre y escuela.');
   }
 
-  if(students.some(student => !student.gender)) {
-    throw new Error("Todos los estudiantes deben tener un género especificado (male o female).");
+  if (students.some((student) => !student.gender)) {
+    throw new Error(
+      'Todos los estudiantes deben tener un género especificado (male o female).'
+    );
   }
 
   const newTeam = {
-    id: uid("team"),
+    id: uid('team'),
     school,
     name,
     students,
@@ -157,20 +166,26 @@ export const addTeam = ({ school, name, students }) => {
 
 export const editTeam = (teamId, { school, name, students }) => {
   if (dataState.started) {
-    throw new Error("No se pueden editar equipos después de que el torneo ha comenzado.");
+    throw new Error(
+      'No se pueden editar equipos después de que el torneo ha comenzado.'
+    );
   }
 
-  if(students.some(student => !student.gender)) {
-    throw new Error("Todos los estudiantes deben tener un género especificado (male o female).");
+  if (students.some((student) => !student.gender)) {
+    throw new Error(
+      'Todos los estudiantes deben tener un género especificado (male o female).'
+    );
   }
 
   if (!school || !name || !students || students.length !== STUDENTS_PER_TEAM) {
-    throw new Error("Todos los campos son obligatorios y debe haber 5 estudiantes.");
+    throw new Error(
+      'Todos los campos son obligatorios y debe haber 5 estudiantes.'
+    );
   }
 
-  const teamIndex = dataState.teams.findIndex(team => team.id === teamId);
+  const teamIndex = dataState.teams.findIndex((team) => team.id === teamId);
   if (teamIndex === -1) {
-    throw new Error("No se encontró el equipo.");
+    throw new Error('No se encontró el equipo.');
   }
 
   dataState.teams[teamIndex] = {
@@ -183,14 +198,16 @@ export const editTeam = (teamId, { school, name, students }) => {
   saveState();
 };
 
-export const deleteTeam = teamId => {
+export const deleteTeam = (teamId) => {
   if (dataState.started) {
-    throw new Error("No se pueden eliminar equipos después de que el torneo ha comenzado.");
+    throw new Error(
+      'No se pueden eliminar equipos después de que el torneo ha comenzado.'
+    );
   }
 
-  const teamIndex = dataState.teams.findIndex(team => team.id === teamId);
+  const teamIndex = dataState.teams.findIndex((team) => team.id === teamId);
   if (teamIndex === -1) {
-    throw new Error("No se encontró el equipo.");
+    throw new Error('No se encontró el equipo.');
   }
 
   dataState.teams.splice(teamIndex, 1);
@@ -198,18 +215,22 @@ export const deleteTeam = teamId => {
 };
 
 const getStudentId = (team, student, index) =>
-  typeof student === "object" && student !== null && student.id
+  typeof student === 'object' && student !== null && student.id
     ? student.id
     : `${team.id}_student_${index + 1}`;
 
-const getStudentName = student =>
-  typeof student === "object" && student !== null
-    ? student.name || student.nombre || "Estudiante"
+const getStudentName = (student) =>
+  typeof student === 'object' && student !== null
+    ? student.name || student.nombre || 'Estudiante'
     : String(student);
 
 const createParticipants = (team, studentIds) =>
   team.students
-    .map((student, index) => ({ student, index, id: getStudentId(team, student, index) }))
+    .map((student, index) => ({
+      student,
+      index,
+      id: getStudentId(team, student, index),
+    }))
     .filter(({ id }) => studentIds.includes(id))
     .map(({ student, id }) => ({
       id,
@@ -217,26 +238,29 @@ const createParticipants = (team, studentIds) =>
       score: 0,
     }));
 
-const getTeamScore = teamId =>
+const getTeamScore = (teamId) =>
   dataState.rounds.reduce((totalScore, round) => {
     const teamPairings = round.pairings.filter(
-      pairing => pairing.teamAId === teamId || pairing.teamBId === teamId
+      (pairing) => pairing.teamAId === teamId || pairing.teamBId === teamId
     );
 
     return (
       totalScore +
       teamPairings.reduce((roundScore, pairing) => {
-        const teamScore = pairing.teamAId === teamId ? pairing.teamAScore : pairing.teamBScore;
+        const teamScore =
+          pairing.teamAId === teamId ? pairing.teamAScore : pairing.teamBScore;
         return roundScore + (teamScore || 0);
       }, 0)
     );
   }, 0);
 
 const getPlayedOpponents = () => {
-  const opponents = new Map(dataState.teams.map(team => [team.id, new Set()]));
+  const opponents = new Map(
+    dataState.teams.map((team) => [team.id, new Set()])
+  );
 
-  dataState.rounds.forEach(round =>
-    round.pairings.forEach(pairing => {
+  dataState.rounds.forEach((round) =>
+    round.pairings.forEach((pairing) => {
       opponents.get(pairing.teamAId)?.add(pairing.teamBId);
       opponents.get(pairing.teamBId)?.add(pairing.teamAId);
     })
@@ -245,7 +269,7 @@ const getPlayedOpponents = () => {
   return opponents;
 };
 
-const shuffle = values => {
+const shuffle = (values) => {
   const result = [...values];
   for (let index = result.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(Math.random() * (index + 1));
@@ -265,7 +289,7 @@ const getPairingCandidates = (team, remainingTeams, opponents) => {
   const teamOpponents = opponents.get(team.id);
 
   return remainingTeams
-    .filter(candidate => canPair(team, candidate))
+    .filter((candidate) => canPair(team, candidate))
     .sort((left, right) => {
       const leftHasRematch = teamOpponents.has(left.id);
       const rightHasRematch = teamOpponents.has(right.id);
@@ -282,7 +306,7 @@ const findPairings = (teams, opponents, allowBye) => {
 
   for (const candidate of candidates) {
     const result = findPairings(
-      remaining.filter(other => other.id !== candidate.id),
+      remaining.filter((other) => other.id !== candidate.id),
       opponents,
       allowBye
     );
@@ -302,23 +326,31 @@ const findPairings = (teams, opponents, allowBye) => {
   return null;
 };
 
-const buildPairings = orderedTeams => {
+const buildPairings = (orderedTeams) => {
   const opponents = getPlayedOpponents();
-  const result = findPairings(orderedTeams, opponents, orderedTeams.length % 2 === 1);
+  const result = findPairings(
+    orderedTeams,
+    opponents,
+    orderedTeams.length % 2 === 1
+  );
 
   if (!result) {
     throw new Error(
-      "No existe un emparejamiento posible sin enfrentar equipos de la misma escuela."
+      'No existe un emparejamiento posible sin enfrentar equipos de la misma escuela.'
     );
   }
 
   return {
     pairings: result.pairings.map(([teamA, teamB]) => ({
-      id: uid("match"),
+      id: uid('match'),
       teamAId: teamA.id,
       teamBId: teamB.id,
-      teamAStudentIds: teamA.students.map((student, index) => getStudentId(teamA, student, index)),
-      teamBStudentIds: teamB.students.map((student, index) => getStudentId(teamB, student, index)),
+      teamAStudentIds: teamA.students.map((student, index) =>
+        getStudentId(teamA, student, index)
+      ),
+      teamBStudentIds: teamB.students.map((student, index) =>
+        getStudentId(teamB, student, index)
+      ),
       teamAStudents: [],
       teamBStudents: [],
       teamAScore: 0,
@@ -331,10 +363,11 @@ const buildPairings = orderedTeams => {
 
 export const getTeamStandings = () => {
   return dataState.teams
-    .map(team => {
+    .map((team) => {
       const wins = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          pairing => pairing.teamAId === team.id || pairing.teamBId === team.id
+          (pairing) =>
+            pairing.teamAId === team.id || pairing.teamBId === team.id
         );
 
         if (!pairing || !pairing.completed) return count;
@@ -348,7 +381,8 @@ export const getTeamStandings = () => {
 
       const draws = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          pairing => pairing.teamAId === team.id || pairing.teamBId === team.id
+          (pairing) =>
+            pairing.teamAId === team.id || pairing.teamBId === team.id
         );
         if (!pairing || !pairing.completed) return count;
 
@@ -357,7 +391,8 @@ export const getTeamStandings = () => {
 
       const losses = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          pairing => pairing.teamAId === team.id || pairing.teamBId === team.id
+          (pairing) =>
+            pairing.teamAId === team.id || pairing.teamBId === team.id
         );
         if (!pairing || !pairing.completed) return count;
         if (pairing.teamAId === team.id) {
@@ -385,7 +420,7 @@ export const getSchoolStandings = () => {
 
   return Array.from(schoolScores.entries())
     .map(([school, score]) => {
-      const teams = teamStandings.filter(t => t.school === school);
+      const teams = teamStandings.filter((t) => t.school === school);
       const wins = teams.reduce((acc, team) => acc + team.wins, 0);
       const draws = teams.reduce((acc, team) => acc + team.draws, 0);
       const losses = teams.reduce((acc, team) => acc + team.losses, 0);
@@ -398,14 +433,24 @@ export const getSchoolStandings = () => {
 const getStudentScore = (team, student) => {
   const studentId = getStudentId(team, student, team.students.indexOf(student));
   return dataState.rounds.reduce((total, round) => {
-    round.pairings.forEach(pairing => {
-      if (pairing.teamAId === team.id && pairing.teamAStudentIds.includes(studentId)) {
-        const studentResult = pairing.teamAStudents.find(s => s.id === studentId);
+    round.pairings.forEach((pairing) => {
+      if (
+        pairing.teamAId === team.id &&
+        pairing.teamAStudentIds.includes(studentId)
+      ) {
+        const studentResult = pairing.teamAStudents.find(
+          (s) => s.id === studentId
+        );
         if (studentResult) {
           total += studentResult.score;
         }
-      } else if (pairing.teamBId === team.id && pairing.teamBStudentIds.includes(studentId)) {
-        const studentResult = pairing.teamBStudents.find(s => s.id === studentId);
+      } else if (
+        pairing.teamBId === team.id &&
+        pairing.teamBStudentIds.includes(studentId)
+      ) {
+        const studentResult = pairing.teamBStudents.find(
+          (s) => s.id === studentId
+        );
         if (studentResult) {
           total += studentResult.score;
         }
@@ -420,7 +465,11 @@ export const getStudentStandings = () => {
 
   for (const team of dataState.teams) {
     for (const student of team.students) {
-      const studentId = getStudentId(team, student, team.students.indexOf(student));
+      const studentId = getStudentId(
+        team,
+        student,
+        team.students.indexOf(student)
+      );
       const score = studentScores.get(studentId) || 0;
 
       studentScores.set(studentId, score + getStudentScore(team, student));
@@ -429,23 +478,30 @@ export const getStudentStandings = () => {
 
   return Array.from(studentScores.entries())
     .map(([studentId, score]) => {
-      const team = dataState.teams.find(team =>
-        team.students.some(s => getStudentId(team, s, team.students.indexOf(s)) === studentId)
+      const team = dataState.teams.find((team) =>
+        team.students.some(
+          (s) => getStudentId(team, s, team.students.indexOf(s)) === studentId
+        )
       );
 
       const student = dataState.teams
-        .flatMap(team => team.students)
-        .find(student => getStudentId(team, student, team.students.indexOf(student)) === studentId);
+        .flatMap((team) => team.students)
+        .find(
+          (student) =>
+            getStudentId(team, student, team.students.indexOf(student)) ===
+            studentId
+        );
 
       const roundsPlayed = dataState.rounds.reduce((count, round) => {
         const match = round.pairings.find(
-          pairing =>
-            (pairing.teamAId === team.id && pairing.teamAStudents.some(s => s.id === studentId)) ||
-            (pairing.teamBId === team.id && pairing.teamBStudents.some(s => s.id === studentId))
+          (pairing) =>
+            (pairing.teamAId === team.id &&
+              pairing.teamAStudents.some((s) => s.id === studentId)) ||
+            (pairing.teamBId === team.id &&
+              pairing.teamBStudents.some((s) => s.id === studentId))
         );
         return count + (match ? 1 : 0);
       }, 0);
-
 
       return {
         studentId,
@@ -454,7 +510,7 @@ export const getStudentStandings = () => {
         school: team?.school,
         team: team?.name,
         roundsPlayed: roundsPlayed,
-        gender: student?.gender
+        gender: student?.gender,
       };
     })
     .sort((left, right) => right.score - left.score);
@@ -462,22 +518,29 @@ export const getStudentStandings = () => {
 
 export const generateRound = () => {
   if (dataState.rounds.length >= dataState.totalRounds) {
-    throw new Error("Ya se generaron todas las rondas programadas.");
+    throw new Error('Ya se generaron todas las rondas programadas.');
   }
 
   if (dataState.teams.length < 2) {
-    throw new Error("Se necesitan al menos 2 equipos para generar una ronda.");
+    throw new Error('Se necesitan al menos 2 equipos para generar una ronda.');
   }
 
-  if (dataState.rounds.some(round => round.pairings.some(pairing => !pairing.completed))) {
-    throw new Error("No se puede generar una nueva ronda mientras haya enfrentamientos pendientes.");
+  if (
+    dataState.rounds.some((round) =>
+      round.pairings.some((pairing) => !pairing.completed)
+    )
+  ) {
+    throw new Error(
+      'No se puede generar una nueva ronda mientras haya enfrentamientos pendientes.'
+    );
   }
 
   const roundNumber = dataState.rounds.length + 1;
-  const orderedTeams = roundNumber === 1 ? shuffle(dataState.teams) : getTeamStandings();
+  const orderedTeams =
+    roundNumber === 1 ? shuffle(dataState.teams) : getTeamStandings();
   const roundPairings = buildPairings(orderedTeams);
   const round = {
-    id: uid("round"),
+    id: uid('round'),
     number: roundNumber,
     pairings: roundPairings.pairings,
     byeTeamId: roundPairings.byeTeamId,
@@ -491,8 +554,10 @@ export const generateRound = () => {
 export const getRounds = () => dataState.rounds;
 
 const getMatchContext = (roundId, pairingId) => {
-  const round = dataState.rounds.find(candidate => candidate.id === roundId);
-  const pairing = round?.pairings.find(candidate => candidate.id === pairingId);
+  const round = dataState.rounds.find((candidate) => candidate.id === roundId);
+  const pairing = round?.pairings.find(
+    (candidate) => candidate.id === pairingId
+  );
 
   return {
     pairing,
@@ -501,18 +566,18 @@ const getMatchContext = (roundId, pairingId) => {
   };
 };
 
-const getResultParticipantIds = results =>
-  Array.isArray(results) ? results.map(result => result?.participantId) : [];
+const getResultParticipantIds = (results) =>
+  Array.isArray(results) ? results.map((result) => result?.participantId) : [];
 
-const hasValidScoreEntries = results =>
+const hasValidScoreEntries = (results) =>
   Array.isArray(results) &&
   results.length === PLAYERS_PER_MATCH &&
   results.every(
-    result =>
+    (result) =>
       result &&
-      typeof result === "object" &&
-      Object.hasOwn(result, "participantId") &&
-      Object.hasOwn(result, "score")
+      typeof result === 'object' &&
+      Object.hasOwn(result, 'participantId') &&
+      Object.hasOwn(result, 'score')
   ) &&
   new Set(getResultParticipantIds(results)).size === PLAYERS_PER_MATCH;
 
@@ -520,22 +585,26 @@ const validateMatchParticipants = (pairing, teamAScores, teamBScores) => {
   const teamAStudentIds = getResultParticipantIds(teamAScores);
   const teamBStudentIds = getResultParticipantIds(teamBScores);
   const hasInvalidTeamAPlayer = teamAStudentIds.some(
-    studentId => !pairing.teamAStudentIds.includes(studentId)
+    (studentId) => !pairing.teamAStudentIds.includes(studentId)
   );
   const hasInvalidTeamBPlayer = teamBStudentIds.some(
-    studentId => !pairing.teamBStudentIds.includes(studentId)
+    (studentId) => !pairing.teamBStudentIds.includes(studentId)
   );
 
   if (hasInvalidTeamAPlayer || hasInvalidTeamBPlayer) {
-    throw new Error("Los jugadores seleccionados deben pertenecer al equipo del enfrentamiento.");
+    throw new Error(
+      'Los jugadores seleccionados deben pertenecer al equipo del enfrentamiento.'
+    );
   }
 };
 
 const validateScores = (teamAScores, teamBScores) => {
-  const scores = [...teamAScores, ...teamBScores].map(result => Number(result.score));
+  const scores = [...teamAScores, ...teamBScores].map((result) =>
+    Number(result.score)
+  );
 
-  if (scores.some(score => !Number.isFinite(score) || score < 0)) {
-    throw new Error("Los puntajes deben ser números mayores o iguales a cero.");
+  if (scores.some((score) => !Number.isFinite(score) || score < 0)) {
+    throw new Error('Los puntajes deben ser números mayores o iguales a cero.');
   }
 };
 
@@ -547,7 +616,12 @@ const validateScores = (teamAScores, teamBScores) => {
  * `[{ participantId: "student_1", score: 8 }, ...]`.
  * `participantId` identifica al jugador que participo y `score` es su puntaje.
  */
-export const recordMatchResult = (roundId, pairingId, teamAScores, teamBScores) => {
+export const recordMatchResult = (
+  roundId,
+  pairingId,
+  teamAScores,
+  teamBScores
+) => {
   const { pairing, teamA, teamB } = getMatchContext(roundId, pairingId);
 
   if (
@@ -557,7 +631,9 @@ export const recordMatchResult = (roundId, pairingId, teamAScores, teamBScores) 
     !hasValidScoreEntries(teamAScores) ||
     !hasValidScoreEntries(teamBScores)
   ) {
-    throw new Error("Cada equipo debe indicar exactamente 4 jugadores y sus puntajes.");
+    throw new Error(
+      'Cada equipo debe indicar exactamente 4 jugadores y sus puntajes.'
+    );
   }
 
   const teamAStudentIds = getResultParticipantIds(teamAScores);
@@ -573,10 +649,15 @@ export const recordMatchResult = (roundId, pairingId, teamAScores, teamBScores) 
   pairing.teamBStudents.forEach((student, index) => {
     student.score = Number(teamBScores[index].score);
   });
-  pairing.teamAScore = teamAScores.reduce((total, result) => total + Number(result.score), 0);
-  pairing.teamBScore = teamBScores.reduce((total, result) => total + Number(result.score), 0);
+  pairing.teamAScore = teamAScores.reduce(
+    (total, result) => total + Number(result.score),
+    0
+  );
+  pairing.teamBScore = teamBScores.reduce(
+    (total, result) => total + Number(result.score),
+    0
+  );
   pairing.completed = true;
   saveState();
   return pairing;
 };
-

@@ -1,53 +1,53 @@
 /* Fila que coloca los inputs lado a lado */
 .form-row {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 24px;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
 /* Contenedor individual de label + input */
 .input-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilos de las etiquetas */
 .input-group label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #2b231d;
-    margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2b231d;
+  margin-bottom: 8px;
 }
 
 /* Estilos de las cajas de texto */
 .input-group input {
-    width: 100%;
-    padding: 10px 14px;
-    font-size: 0.95rem;
-    border: 1px solid #421d0b;
-    border-radius: 8px;
-    background-color: #e5e0d8; /* Tono similar a la tarjeta */
-    color: #333;
-    outline: none;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border: 1px solid #421d0b;
+  border-radius: 8px;
+  background-color: #e5e0d8; /* Tono similar a la tarjeta */
+  color: #333;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .input-group input:focus {
-    border-color: #1a100a;
-    box-shadow: 0 0 0 2px rgba(74, 59, 50, 0.2);
+  border-color: #1a100a;
+  box-shadow: 0 0 0 2px rgba(74, 59, 50, 0.2);
 }
 
 /* Fondo oscuro semitransparente */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }

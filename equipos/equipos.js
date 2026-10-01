@@ -1,191 +1,163 @@
-import { addTeam, getTeams, editTeam, deleteTeam, startTournament, getData, setData, initialData } from "../js/data.js";
-import { confirmCustom, alertCustom } from "../js/main-buttons.js";
+import {
+  addTeam,
+  getTeams,
+  editTeam,
+  deleteTeam,
+  startTournament,
+  getData,
+  setData,
+  initialData,
+} from '../js/data.js';
+import { confirmCustom, alertCustom } from '../js/main-buttons.js';
 
-console.log("equipos.js conectado");
+console.log('equipos.js conectado');
 
+const escuelaInput = document.getElementById('Escuela');
+const equipoInput = document.getElementById('Equipo');
 
-const escuelaInput = document.getElementById("Escuela");
-const equipoInput = document.getElementById("Equipo");
+const estudiante1Input = document.getElementById('Estudiante1');
+const estudiante2Input = document.getElementById('Estudiante2');
+const estudiante3Input = document.getElementById('Estudiante3');
+const estudiante4Input = document.getElementById('Estudiante4');
+const estudiante5Input = document.getElementById('Estudiante5');
 
-const estudiante1Input = document.getElementById("Estudiante1");
-const estudiante2Input = document.getElementById("Estudiante2");
-const estudiante3Input = document.getElementById("Estudiante3");
-const estudiante4Input = document.getElementById("Estudiante4");
-const estudiante5Input = document.getElementById("Estudiante5");
+const sexo1Input = document.getElementById('sexoEstudiante1');
+const sexo2Input = document.getElementById('sexoEstudiante2');
+const sexo3Input = document.getElementById('sexoEstudiante3');
+const sexo4Input = document.getElementById('sexoEstudiante4');
+const sexo5Input = document.getElementById('sexoEstudiante5');
 
-const sexo1Input = document.getElementById("sexoEstudiante1");
-const sexo2Input = document.getElementById("sexoEstudiante2");
-const sexo3Input = document.getElementById("sexoEstudiante3");
-const sexo4Input = document.getElementById("sexoEstudiante4");
-const sexo5Input = document.getElementById("sexoEstudiante5");
+const guardarButton = document.getElementById('guardarEquipo');
+const limpiarButton = document.getElementById('limpiarCampos');
+const iniciarButton = document.getElementById('iniciarEvento');
 
-const guardarButton = document.getElementById("guardarEquipo");
-const limpiarButton = document.getElementById("limpiarCampos");
-const iniciarButton = document.getElementById("iniciarEvento");
-
-const equiposRegistrados = document.getElementById("equiposRegistrados");
+const equiposRegistrados = document.getElementById('equiposRegistrados');
 
 let equipoEditando = null;
 
+guardarButton.addEventListener('click', async function () {
+  const escuela = escuelaInput.value.trim();
+  const nombreEquipo = equipoInput.value.trim();
 
+  const estudiantes = [
+    {
+      name: estudiante1Input.value.trim(),
+      gender: convertirSexo(sexo1Input.value),
+    },
+    {
+      name: estudiante2Input.value.trim(),
+      gender: convertirSexo(sexo2Input.value),
+    },
+    {
+      name: estudiante3Input.value.trim(),
+      gender: convertirSexo(sexo3Input.value),
+    },
+    {
+      name: estudiante4Input.value.trim(),
+      gender: convertirSexo(sexo4Input.value),
+    },
+    {
+      name: estudiante5Input.value.trim(),
+      gender: convertirSexo(sexo5Input.value),
+    },
+  ];
 
+  if (!escuela || !nombreEquipo) {
+    await alertCustom('Escribe la escuela y el nombre del equipo.');
+    return;
+  }
 
+  for (const estudiante of estudiantes) {
+    if (!estudiante.name || !estudiante.gender) {
+      await alertCustom('Completa los datos de los 5 estudiantes.');
+      return;
+    }
+  }
 
-guardarButton.addEventListener("click", async function () {
+  const mensaje =
+    equipoEditando === null
+      ? `¿Deseas guardar este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`
+      : `¿Deseas guardar los cambios de este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`;
 
-    const escuela = escuelaInput.value.trim();
-    const nombreEquipo = equipoInput.value.trim();
+  const seguroDeGuardar = await confirmCustom(
+    mensaje,
+    equipoEditando === null ? 'Guardar Equipo' : 'Guardar cambios'
+  );
 
-    const estudiantes = [
-        {
-            name: estudiante1Input.value.trim(),
-            gender: convertirSexo(sexo1Input.value)
-        },
-        {
-            name: estudiante2Input.value.trim(),
-            gender: convertirSexo(sexo2Input.value)
-        },
-        {
-            name: estudiante3Input.value.trim(),
-            gender: convertirSexo(sexo3Input.value)
-        },
-        {
-            name: estudiante4Input.value.trim(),
-            gender: convertirSexo(sexo4Input.value)
-        },
-        {
-            name: estudiante5Input.value.trim(),
-            gender: convertirSexo(sexo5Input.value)
-        }
-    ];
+  if (!seguroDeGuardar) {
+    return;
+  }
 
+  try {
+    if (equipoEditando === null) {
+      addTeam({
+        school: escuela,
+        name: nombreEquipo,
+        students: estudiantes,
+      });
 
-    if (!escuela || !nombreEquipo) {
-        await alertCustom("Escribe la escuela y el nombre del equipo.");
-        return;
+      await alertCustom('Equipo guardado correctamente.');
+    } else {
+      editTeam(equipoEditando, {
+        school: escuela,
+        name: nombreEquipo,
+        students: estudiantes,
+      });
+
+      await alertCustom('Equipo actualizado correctamente.');
     }
 
-
-    for (const estudiante of estudiantes) {
-
-        if (!estudiante.name || !estudiante.gender) {
-            await alertCustom("Completa los datos de los 5 estudiantes.");
-            return;
-        }
-
-    }
-
-    const mensaje = equipoEditando === null
-        ? `¿Deseas guardar este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`
-        : `¿Deseas guardar los cambios de este equipo?\n\nEscuela: ${escuela}\nEquipo: ${nombreEquipo}`;
-
-    const seguroDeGuardar = await confirmCustom(
-        mensaje,
-        equipoEditando === null ? "Guardar Equipo" : "Guardar cambios"
-    );
-
-    if (!seguroDeGuardar) {
-        return;
-    }
-
-    
-    try {
-
-        if (equipoEditando === null) {
-
-            addTeam({
-                school: escuela,
-                name: nombreEquipo,
-                students: estudiantes
-            });
-
-            await alertCustom("Equipo guardado correctamente.");
-
-        }
-
-        else {
-
-            editTeam(equipoEditando, {
-                school: escuela,
-                name: nombreEquipo,
-                students: estudiantes
-            });
-
-            await alertCustom("Equipo actualizado correctamente.");
-        }
-
-
-        limpiarCampos();
-        mostrarEquipos();
-
-    } catch (error) {
-
-        console.error(error);
-        await alertCustom(error.message);
-
-    }
-
+    limpiarCampos();
+    mostrarEquipos();
+  } catch (error) {
+    console.error(error);
+    await alertCustom(error.message);
+  }
 });
 
-
-
-
 function convertirSexo(sexo) {
+  if (sexo === 'Femenino') {
+    return 'female';
+  }
 
-    if (sexo === "Femenino") {
-        return "female";
-    }
+  if (sexo === 'Masculino') {
+    return 'male';
+  }
 
-    if (sexo === "Masculino") {
-        return "male";
-    }
-
-    return null;
+  return null;
 }
-
-
-
 
 function convertirGender(gender) {
+  if (gender === 'female') {
+    return 'Femenino';
+  }
 
-    if (gender === "female") {
-        return "Femenino";
-    }
+  if (gender === 'male') {
+    return 'Masculino';
+  }
 
-    if (gender === "male") {
-        return "Masculino";
-    }
-
-    return "Seleccionar";
+  return 'Seleccionar';
 }
 
-
-
 function mostrarEquipos() {
+  equiposRegistrados.innerHTML = '';
 
-    equiposRegistrados.innerHTML = "";
+  const equipos = getTeams();
 
-    const equipos = getTeams();
+  console.log('Equipos registrados:', equipos);
 
-    console.log("Equipos registrados:", equipos);
+  if (equipos.length === 0) {
+    equiposRegistrados.innerHTML = `<p>No hay equipos registrados todavía.</p>`;
 
+    return;
+  }
 
-    if (equipos.length === 0) {
+  equipos.forEach((equipo) => {
+    const tarjeta = document.createElement('div');
 
-        equiposRegistrados.innerHTML = `<p>No hay equipos registrados todavía.</p>`;
+    tarjeta.classList.add('tarjeta-equipo');
 
-        return;
-    }
-
-
-    equipos.forEach((equipo) => {
-
-        const tarjeta = document.createElement("div");
-
-        tarjeta.classList.add("tarjeta-equipo");
-
-
-        tarjeta.innerHTML = `
+    tarjeta.innerHTML = `
 
             <div class="equipo-header">
 
@@ -223,7 +195,9 @@ function mostrarEquipos() {
 
                     <tbody>
 
-                        ${equipo.students.map((estudiante, index) => `
+                        ${equipo.students
+                          .map(
+                            (estudiante, index) => `
 
                             <tr>
 
@@ -241,7 +215,9 @@ function mostrarEquipos() {
 
                             </tr>
 
-                        `).join("")}
+                        `
+                          )
+                          .join('')}
 
                     </tbody>
 
@@ -251,196 +227,127 @@ function mostrarEquipos() {
 
         `;
 
+    const botonEditar = tarjeta.querySelector('.editar-equipo');
 
-       
-
-        const botonEditar =
-            tarjeta.querySelector(".editar-equipo");
-
-        botonEditar.addEventListener("click", function () {
-
-            cargarEquipoParaEditar(equipo);
-
-        });
-
-
-        
-        const botonEliminar =
-            tarjeta.querySelector(".eliminar-equipo");
-
-        botonEliminar.addEventListener("click", function () {
-
-            eliminarEquipo(equipo.id);
-
-        });
-
-
-        equiposRegistrados.appendChild(tarjeta);
-
+    botonEditar.addEventListener('click', function () {
+      cargarEquipoParaEditar(equipo);
     });
 
+    const botonEliminar = tarjeta.querySelector('.eliminar-equipo');
+
+    botonEliminar.addEventListener('click', function () {
+      eliminarEquipo(equipo.id);
+    });
+
+    equiposRegistrados.appendChild(tarjeta);
+  });
 }
-
-
-
 
 function cargarEquipoParaEditar(equipo) {
+  equipoEditando = equipo.id;
 
-    equipoEditando = equipo.id;
+  escuelaInput.value = equipo.school;
 
+  equipoInput.value = equipo.name;
 
-    escuelaInput.value = equipo.school;
+  estudiante1Input.value = equipo.students[0].name || equipo.students[0].nombre;
 
-    equipoInput.value = equipo.name;
+  sexo1Input.value = convertirGender(equipo.students[0].gender);
 
+  estudiante2Input.value = equipo.students[1].name || equipo.students[1].nombre;
 
-    estudiante1Input.value =
-        equipo.students[0].name || equipo.students[0].nombre;
+  sexo2Input.value = convertirGender(equipo.students[1].gender);
 
-    sexo1Input.value =
-        convertirGender(equipo.students[0].gender);
+  estudiante3Input.value = equipo.students[2].name || equipo.students[2].nombre;
 
+  sexo3Input.value = convertirGender(equipo.students[2].gender);
 
-    estudiante2Input.value =
-        equipo.students[1].name || equipo.students[1].nombre;
+  estudiante4Input.value = equipo.students[3].name || equipo.students[3].nombre;
 
-    sexo2Input.value =
-        convertirGender(equipo.students[1].gender);
+  sexo4Input.value = convertirGender(equipo.students[3].gender);
 
+  estudiante5Input.value = equipo.students[4].name || equipo.students[4].nombre;
 
-    estudiante3Input.value =
-        equipo.students[2].name || equipo.students[2].nombre;
+  sexo5Input.value = convertirGender(equipo.students[4].gender);
 
-    sexo3Input.value =
-        convertirGender(equipo.students[2].gender);
+  guardarButton.textContent = 'Guardar cambios';
 
-
-    estudiante4Input.value =
-        equipo.students[3].name || equipo.students[3].nombre;
-
-    sexo4Input.value =
-        convertirGender(equipo.students[3].gender);
-
-
-    estudiante5Input.value =
-        equipo.students[4].name || equipo.students[4].nombre;
-
-    sexo5Input.value =
-        convertirGender(equipo.students[4].gender);
-
-
-    guardarButton.textContent = "Guardar cambios";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
-
-
-
 
 async function eliminarEquipo(teamId) {
-    const confirmar = await confirmCustom(
-        "¿Seguro que quieres eliminar este equipo?",
-        "Eliminar equipo"
-    );
+  const confirmar = await confirmCustom(
+    '¿Seguro que quieres eliminar este equipo?',
+    'Eliminar equipo'
+  );
 
-    if (!confirmar) {
-        return;
-    }
+  if (!confirmar) {
+    return;
+  }
 
+  try {
+    deleteTeam(teamId);
 
-    try {
+    await alertCustom('Equipo eliminado correctamente.');
 
-        deleteTeam(teamId);
+    mostrarEquipos();
+  } catch (error) {
+    console.error(error);
 
-        await alertCustom("Equipo eliminado correctamente.");
-
-        mostrarEquipos();
-
-    } catch (error) {
-
-        console.error(error);
-
-        await alertCustom(error.message);
-
-    }
-
+    await alertCustom(error.message);
+  }
 }
 
-
-
-
-limpiarButton.addEventListener("click", function () {
-
-    limpiarCampos();
-
+limpiarButton.addEventListener('click', function () {
+  limpiarCampos();
 });
-
 
 function limpiarCampos() {
+  escuelaInput.value = '';
 
-    escuelaInput.value = "";
+  equipoInput.value = '';
 
-    equipoInput.value = "";
+  estudiante1Input.value = '';
+  estudiante2Input.value = '';
+  estudiante3Input.value = '';
+  estudiante4Input.value = '';
+  estudiante5Input.value = '';
 
+  sexo1Input.value = 'Seleccionar';
+  sexo2Input.value = 'Seleccionar';
+  sexo3Input.value = 'Seleccionar';
+  sexo4Input.value = 'Seleccionar';
+  sexo5Input.value = 'Seleccionar';
 
-    estudiante1Input.value = "";
-    estudiante2Input.value = "";
-    estudiante3Input.value = "";
-    estudiante4Input.value = "";
-    estudiante5Input.value = "";
+  equipoEditando = null;
 
-
-    sexo1Input.value = "Seleccionar";
-    sexo2Input.value = "Seleccionar";
-    sexo3Input.value = "Seleccionar";
-    sexo4Input.value = "Seleccionar";
-    sexo5Input.value = "Seleccionar";
-
-
-    equipoEditando = null;
-
-    guardarButton.textContent = "Guardar Equipo";
-
+  guardarButton.textContent = 'Guardar Equipo';
 }
 
+iniciarButton.addEventListener('click', async function () {
+  const confirmar = await confirmCustom(
+    'Al iniciar, los equipos y la configuración quedarán bloqueados. ¿Desea continuar?',
+    'Iniciar evento'
+  );
 
+  if (!confirmar) {
+    return;
+  }
 
+  try {
+    startTournament();
 
-iniciarButton.addEventListener("click", async function () {
+    await alertCustom('Evento iniciado correctamente.');
 
-    const confirmar = await confirmCustom(
-        "Al iniciar, los equipos y la configuración quedarán bloqueados. ¿Desea continuar?",
-        "Iniciar evento"
-    );
+    mostrarEquipos();
+  } catch (error) {
+    console.error(error);
 
-    if (!confirmar) {
-        return;
-    }
-
-
-    try {
-
-        startTournament();
-
-        await alertCustom("Evento iniciado correctamente.");
-
-        mostrarEquipos();
-
-    } catch (error) {
-
-        console.error(error);
-
-        await alertCustom(error.message);
-
-    }
-
+    await alertCustom(error.message);
+  }
 });
-
-
 
 mostrarEquipos();

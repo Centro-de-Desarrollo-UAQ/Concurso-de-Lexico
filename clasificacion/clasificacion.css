@@ -97,7 +97,6 @@
 
 /* Print */
 @media print {
-
   #podium {
     display: none;
   }
