@@ -24,11 +24,21 @@ function getStudentName(student) {
 let rondaSeleccionada = 1;
 
 // ---------- Generar siguiente ronda ----------
+// ---------- Evento del Botón Principal ----------
 document
   .getElementById('btnSiguienteRonda')
   .addEventListener('click', async () => {
     const data = getData();
+    const rounds = getRounds();
+    const totalRounds = getTotalRounds();
 
+    // 1. Si ya se generaron todas las rondas, redirige a Clasificaciones
+    if (rounds.length >= totalRounds) {
+      window.location.href = '../clasificacion/clasificacion.html';
+      return;
+    }
+
+    // 2. Validación de equipos mínimos
     if (data.teams.length < 2) {
       await alertCustom(
         'Todavía no hay suficientes equipos registrados (se necesitan al menos 2).'
@@ -36,6 +46,7 @@ document
       return;
     }
 
+    // 3. Intenta generar la siguiente ronda
     try {
       const nuevaRonda = generateRound();
       rondaSeleccionada = nuevaRonda.number;
@@ -149,6 +160,19 @@ function renderizarPantalla() {
       renderizarPantalla();
     };
     tabsContainer.appendChild(a);
+
+    // ---------- Control del Botón Principal (Siguiente Ronda / Ver Resultados) ----------
+    const btnPrincipal = document.getElementById('btnSiguienteRonda');
+
+    // Evaluamos si ya se generaron todas las rondas programadas
+    if (rounds.length >= totalRounds) {
+      btnPrincipal.textContent = 'Ver resultados';
+      // Cambiar la clase de estilo para distinguirlo
+      btnPrincipal.className = 'button accent-button'; 
+    } else {
+      btnPrincipal.textContent = 'Generar siguiente ronda';
+      btnPrincipal.className = 'button default-button';
+    }
   }
 
   const lista = document.getElementById('listaEnfrentamientos');

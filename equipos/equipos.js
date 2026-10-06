@@ -343,6 +343,8 @@ iniciarButton.addEventListener('click', async function () {
     await alertCustom('Evento iniciado correctamente.');
 
     mostrarEquipos();
+
+    window.location.href = '../rondas/rondas.html';
   } catch (error) {
     console.error(error);
 
