@@ -58,7 +58,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (!printZone) {
       window.location.href = '../clasificacion/clasificacion.html?print=true';
-
       return;
     }
 
@@ -79,7 +78,13 @@ window.addEventListener('DOMContentLoaded', () => {
     const printZone = document.getElementById('clasification-print-zone');
 
     if (printZone) {
-      printButton.click();
+      waitForContent(printZone).then(async () => {
+        await document.fonts.ready;
+        await new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r))
+        );
+        window.print();
+      });
     }
 
     const url = new URL(window.location);
@@ -88,37 +93,56 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+function waitForContent(el, timeout = 3000) {
+  return new Promise((resolve) => {
+    if (el.children.length > 0) return resolve();
+
+    const observer = new MutationObserver(() => {
+      if (el.children.length > 0) {
+        observer.disconnect();
+        resolve();
+      }
+    });
+    observer.observe(el, { childList: true, subtree: true });
+
+    setTimeout(() => {
+      observer.disconnect();
+      resolve();
+    }, timeout);
+  });
+}
+
 function injectConfirmModal() {
   const modalHTML = /* html */ `
-        <div id="custom-modal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <h3 id="modal-title"></h3>
-            <p id="modal-message"></p>
-            
-            <div class="modal-actions">
-                <button id="modal-cancel-btn" class="button default-button">Cancelar</button>
-                <button id="modal-confirm-btn" class="button accent-button">Aceptar</button>
-            </div>
+    <div id="custom-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 id="modal-title"></h3>
+        <p id="modal-message"></p>
+
+        <div class="modal-actions">
+          <button id="modal-cancel-btn" class="button default-button">Cancelar</button>
+          <button id="modal-confirm-btn" class="button accent-button">Aceptar</button>
         </div>
+      </div>
     </div>
-    `;
+  `;
 
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
 function injectAlertModal() {
   const modalHTML = /* html */ `
-        <div id="custom-alert-modal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <h3 id="alert-modal-title">Alerta</h3>
-            <p id="alert-modal-message"></p>
+    <div id="custom-alert-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 id="alert-modal-title">Alerta</h3>
+        <p id="alert-modal-message"></p>
 
-            <div class="modal-actions"></div>
-                <button id="alert-modal-ok-btn" class="button accent-button">Aceptar</button>
-            </div>
+        <div class="modal-actions">
+          <button id="alert-modal-ok-btn" class="button accent-button">Aceptar</button>
         </div>
+      </div>
     </div>
-    `;
+  `;
 
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
@@ -158,13 +182,11 @@ export function confirmCustom(mensaje, titulo = 'Confirmar acción') {
 
     modal.classList.remove('hidden');
 
-    // Al hacer clic en Aceptar
     const handleConfirm = () => {
       cleanup();
       resolve(true);
     };
 
-    // Al hacer clic en Cancelar
     const handleCancel = () => {
       cleanup();
       resolve(false);
