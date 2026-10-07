@@ -1,5 +1,5 @@
 import { addTeam, getTeams, editTeam, deleteTeam, startTournament, getData, setData, initialData } from "../js/data.js";
-import { confirmCustom } from "../js/main-buttons.js";
+import { confirmCustom, showCustom  } from "../js/main-buttons.js";
 
 console.log("equipos.js conectado");
 
@@ -24,6 +24,8 @@ const limpiarButton = document.getElementById("limpiarCampos");
 const iniciarButton = document.getElementById("iniciarEvento");
 
 const equiposRegistrados = document.getElementById("equiposRegistrados");
+
+const formularioEquipo = document.getElementById("formularioEquipo");
 
 let equipoEditando = null;
 
@@ -61,7 +63,10 @@ guardarButton.addEventListener("click", async function () {
 
 
     if (!escuela || !nombreEquipo) {
-        alert("Escribe la escuela y el nombre del equipo.");
+        await showCustom(
+            "Escribe la escuela y el nombre del equipo.",
+            "Datos incompletos"
+        );
         return;
     }
 
@@ -69,7 +74,10 @@ guardarButton.addEventListener("click", async function () {
     for (const estudiante of estudiantes) {
 
         if (!estudiante.name || !estudiante.gender) {
-            alert("Completa los datos de los 5 estudiantes.");
+            await showCustom(
+                "Completa los datos de los 5 estudiantes.",
+                "Datos incompletos"
+            );
             return;
         }
 
@@ -99,11 +107,12 @@ guardarButton.addEventListener("click", async function () {
                 students: estudiantes
             });
 
-            alert("Equipo guardado correctamente.");
+            await showCustom(
+                "Equipo guardado correctamente.",
+                "Equipo guardado"
+            );
 
-        }
-
-        else {
+        } else {
 
             editTeam(equipoEditando, {
                 school: escuela,
@@ -111,9 +120,11 @@ guardarButton.addEventListener("click", async function () {
                 students: estudiantes
             });
 
-            alert("Equipo actualizado correctamente.");
+            await showCustom(
+                "Equipo actualizado correctamente.",
+                "Equipo actualizado"
+            );
         }
-
 
         limpiarCampos();
         mostrarEquipos();
@@ -121,8 +132,11 @@ guardarButton.addEventListener("click", async function () {
     } catch (error) {
 
         console.error(error);
-        alert(error.message);
 
+        await showCustom(
+            error.message,
+            "Error"
+        );
     }
 
 });
@@ -196,14 +210,15 @@ function mostrarEquipos() {
 
                 <div class="acciones-equipo">
 
-                    <button class="editar-equipo">
-                        Editar
-                    </button>
+                    ${!getData().started ? `
+                        <button class="editar-equipo">
+                            Editar
+                        </button>
 
-                    <button class="eliminar-equipo">
-                        Eliminar
-                    </button>
-
+                        <button class="eliminar-equipo">
+                            Eliminar
+                        </button>
+                    ` : ""}
                 </div>
 
             </div>
@@ -257,23 +272,22 @@ function mostrarEquipos() {
         const botonEditar =
             tarjeta.querySelector(".editar-equipo");
 
-        botonEditar.addEventListener("click", function () {
-
-            cargarEquipoParaEditar(equipo);
-
-        });
+        if (botonEditar) {
+            botonEditar.addEventListener("click", function () {
+                cargarEquipoParaEditar(equipo);
+            });
+        }
 
 
         
         const botonEliminar =
             tarjeta.querySelector(".eliminar-equipo");
 
-        botonEliminar.addEventListener("click", function () {
-
-            eliminarEquipo(equipo.id);
-
-        });
-
+        if (botonEliminar) {
+            botonEliminar.addEventListener("click", function () {
+                eliminarEquipo(equipo.id);
+            });
+        }
 
         equiposRegistrados.appendChild(tarjeta);
 
@@ -357,7 +371,10 @@ async function eliminarEquipo(teamId) {
 
         deleteTeam(teamId);
 
-        alert("Equipo eliminado correctamente.");
+        await showCustom(
+            "Equipo eliminado correctamente.",
+            "Equipo eliminado"
+        );
 
         mostrarEquipos();
 
@@ -365,8 +382,10 @@ async function eliminarEquipo(teamId) {
 
         console.error(error);
 
-        alert(error.message);
-
+        await showCustom(
+            error.message,
+            "Error"
+        );
     }
 
 }
@@ -427,7 +446,12 @@ iniciarButton.addEventListener("click", async function () {
 
         startTournament();
 
-        alert("Evento iniciado correctamente.");
+        actualizarVistaEvento();
+
+        await showCustom(
+            "Evento iniciado correctamente.",
+            "Evento iniciado"
+        );
 
         mostrarEquipos();
 
@@ -435,12 +459,31 @@ iniciarButton.addEventListener("click", async function () {
 
         console.error(error);
 
-        alert(error.message);
-
+        await showCustom(
+            error.message,
+            "Error"
+        );
     }
 
-});
+    });
 
+    function actualizarVistaEvento() {
 
+        const data = getData();
 
+        if (data.started) {
+
+            formularioEquipo.style.display = "none";
+
+            iniciarButton.style.display = "none";
+
+        } else {
+
+            formularioEquipo.style.display = "";
+
+            iniciarButton.style.display = "";
+        }
+    }
+
+actualizarVistaEvento();
 mostrarEquipos();

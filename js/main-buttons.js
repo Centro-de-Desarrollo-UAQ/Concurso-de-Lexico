@@ -107,3 +107,38 @@ export function confirmCustom(mensaje, titulo = "Confirmar acción") {
     });
 }
 
+export function showCustom(mensaje, titulo = "Mensaje") {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const confirmBtn = document.getElementById('modal-confirm-btn');
+        const cancelBtn = document.getElementById('modal-cancel-btn');
+
+        modalTitle.textContent = titulo;
+        modalMessage.textContent = mensaje;
+
+        // Ocultar botón Cancelar
+        cancelBtn.style.display = "none";
+
+        modal.classList.remove('hidden');
+
+        const handleConfirm = () => {
+            cleanup();
+            resolve();
+        };
+
+        const cleanup = () => {
+            modal.classList.add('hidden');
+
+            confirmBtn.removeEventListener('click', handleConfirm);
+
+            cancelBtn.style.display = "";
+        };
+
+        confirmBtn.addEventListener('click', handleConfirm);
+    });
+}
+
+
+
