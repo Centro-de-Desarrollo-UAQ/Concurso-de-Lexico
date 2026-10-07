@@ -1,43 +1,51 @@
-import { getSchoolStandings, getTeamStandings, getStudentStandings } from "../js/data.js";
+import {
+  getSchoolStandings,
+  getTeamStandings,
+  getStudentStandings,
+} from '../js/data.js';
 
-window.addEventListener("DOMContentLoaded", () => {
-  const podium = document.getElementById("podium");
-  const positionsTable = document.getElementById("positions-table");
-  const printDetails = document.getElementById("print-details");
+window.addEventListener('DOMContentLoaded', () => {
+  const podium = document.getElementById('podium');
+  const positionsTable = document.getElementById('positions-table');
+  const printDetails = document.getElementById('print-details');
 
-  const getStandings = viewId => {
+  const getStandings = (viewId) => {
     switch (viewId) {
-      case "schools":
+      case 'schools':
         return getSchoolStandings();
-      case "teams":
+      case 'teams':
         return getTeamStandings();
-      case "students":
+      case 'students':
         return getStudentStandings();
-      case "male-students":
-        return getStudentStandings().filter(student => student.gender === "male");
-      case "female-students":
-        return getStudentStandings().filter(student => student.gender === "female");
+      case 'male-students':
+        return getStudentStandings().filter(
+          (student) => student.gender === 'male'
+        );
+      case 'female-students':
+        return getStudentStandings().filter(
+          (student) => student.gender === 'female'
+        );
     }
   };
 
-  const getName = viewId => {
+  const getName = (viewId) => {
     switch (viewId) {
-      case "schools":
-        return "Escuelas";
-      case "teams":
-        return "Equipos";
-      case "students":
-        return "Estudiantes";
-      case "male-students":
-        return "Estudiantes Masculinos";
-      case "female-students":
-        return "Estudiantes Femeninos";
+      case 'schools':
+        return 'Escuelas';
+      case 'teams':
+        return 'Equipos';
+      case 'students':
+        return 'Estudiantes';
+      case 'male-students':
+        return 'Estudiantes Masculinos';
+      case 'female-students':
+        return 'Estudiantes Femeninos';
     }
   };
 
-  const getStandingHeadingHTML = viewId => {
+  const getStandingHeadingHTML = (viewId) => {
     switch (viewId) {
-      case "schools":
+      case 'schools':
         return /* html */ `
           <p class="text-bold">Pos</p>
           <p class="text-bold">Escuela</p>
@@ -47,7 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
           <p class="text-bold">E</p>
           <p class="text-bold">P</p>
         `;
-      case "teams":
+      case 'teams':
         return /* html */ `
           <p class="text-bold">Pos</p>
           <p class="text-bold">Equipo</p>
@@ -57,9 +65,9 @@ window.addEventListener("DOMContentLoaded", () => {
           <p class="text-bold">E</p>
           <p class="text-bold">P</p>
         `;
-      case "students":
-      case "male-students":
-      case "female-students":
+      case 'students':
+      case 'male-students':
+      case 'female-students':
         return /* html */ `
           <p class="text-bold">Pos</p>
           <p class="text-bold">Estudiante</p>
@@ -73,7 +81,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const getStandingHTML = (viewId, entry, position) => {
     switch (viewId) {
-      case "schools":
+      case 'schools':
         return /* html */ `
           <p class="text-bold">${position}</p>
           <p>${entry.school}</p>
@@ -83,7 +91,7 @@ window.addEventListener("DOMContentLoaded", () => {
           <p>${entry.draws}</p>
           <p>${entry.losses}</p>
         `;
-      case "teams":
+      case 'teams':
         return /* html */ `
           <p class="text-bold">${position}</p>
           <p>${entry.name}</p>
@@ -93,9 +101,9 @@ window.addEventListener("DOMContentLoaded", () => {
           <p>${entry.draws}</p>
           <p>${entry.losses}</p>
         `;
-      case "students":
-      case "male-students":
-      case "female-students":
+      case 'students':
+      case 'male-students':
+      case 'female-students':
         return /* html */ `
           <p class="text-bold">${position}</p>
           <p>${entry.name}</p>
@@ -107,44 +115,44 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const getStandingGridStyle = viewId => {
+  const getStandingGridStyle = (viewId) => {
     switch (viewId) {
-      case "schools":
-        return "grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr 1fr;";
-      case "teams":
-        return "grid-template-columns: 1fr 3fr 3fr 1fr 1fr 1fr 1fr;";
-      case "students":
-      case "male-students":
-      case "female-students":
-        return "grid-template-columns: 1fr 3fr 3fr 3fr 2fr 1fr;";
+      case 'schools':
+        return 'grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr 1fr;';
+      case 'teams':
+        return 'grid-template-columns: 1fr 3fr 3fr 1fr 1fr 1fr 1fr;';
+      case 'students':
+      case 'male-students':
+      case 'female-students':
+        return 'grid-template-columns: 1fr 3fr 3fr 3fr 2fr 1fr;';
     }
-  }
+  };
 
   const renderPositions = (viewId, standings) => {
     const positionsElements = standings.map((entry, index) => {
-      const entryElement = document.createElement("div");
-      entryElement.classList.add("position-card", "card");
+      const entryElement = document.createElement('div');
+      entryElement.classList.add('position-card', 'card');
       entryElement.style = getStandingGridStyle(viewId);
-  
+
       entryElement.innerHTML = getStandingHTML(viewId, entry, index + 1);
       return entryElement;
     });
-  
-    const headingElement = document.createElement("div");
-    headingElement.classList.add("position-card", "card");
+
+    const headingElement = document.createElement('div');
+    headingElement.classList.add('position-card', 'card');
     headingElement.style = getStandingGridStyle(viewId);
     headingElement.innerHTML = getStandingHeadingHTML(viewId);
-  
+
     positionsTable.appendChild(headingElement);
-    positionsElements.forEach(element => positionsTable.appendChild(element));
-  }
+    positionsElements.forEach((element) => positionsTable.appendChild(element));
+  };
 
   const renderPodium = (viewId, standings) => {
     const podiumEntries = standings.slice(0, 3);
 
     const podiumElements = podiumEntries.map((entry, index) => {
-      const podiumEntry = document.createElement("div");
-      podiumEntry.classList.add("podium-entry", `podium-${index + 1}`);
+      const podiumEntry = document.createElement('div');
+      podiumEntry.classList.add('podium-entry', `podium-${index + 1}`);
       podiumEntry.innerHTML = /* html */ `
         <p class="podium-number">${index + 1}</p>
         <p class="text-xl">${entry.name || entry.school}</p>
@@ -157,12 +165,13 @@ window.addEventListener("DOMContentLoaded", () => {
     podium.appendChild(podiumElements[1]);
     podium.appendChild(podiumElements[0]);
     podium.appendChild(podiumElements[2]);
-  }
+  };
 
   const renderNoTeamsAdvice = () => {
-    const adviceElement = document.createElement("h3");
-    adviceElement.classList.add("text-center", "text-bold");
-    adviceElement.textContent = "No hay equipos registrados. Por favor, registre equipos para ver la clasificación.";
+    const adviceElement = document.createElement('h3');
+    adviceElement.classList.add('text-center', 'text-bold');
+    adviceElement.textContent =
+      'No hay equipos registrados. Por favor, registre equipos para ver la clasificación.';
 
     podium.appendChild(adviceElement);
   };
@@ -172,12 +181,12 @@ window.addEventListener("DOMContentLoaded", () => {
       <h1 class="text-center text-2xl text-bold">Clasificación de ${getName(viewId)}</h1>
       <p class="text-center">Generado el ${new Date().toLocaleDateString()}</p>
     `;
-  }
+  };
 
-  const updateView = viewId => {
-    podium.innerHTML = "";
-    positionsTable.innerHTML = "";
-    printDetails.innerHTML = "";
+  const updateView = (viewId) => {
+    podium.innerHTML = '';
+    positionsTable.innerHTML = '';
+    printDetails.innerHTML = '';
 
     const standings = getStandings(viewId);
 
@@ -192,14 +201,14 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
   /* Allow Values: schools, teams, students, male-students, female-students */
-  const switcherButtons = document.querySelectorAll(".content-switcher button");
-  switcherButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      switcherButtons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
+  const switcherButtons = document.querySelectorAll('.content-switcher button');
+  switcherButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      switcherButtons.forEach((btn) => btn.classList.remove('active'));
+      button.classList.add('active');
       updateView(button.id);
     });
   });
 
-  updateView("schools");
+  updateView('schools');
 });

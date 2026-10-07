@@ -1,0 +1,25 @@
+#listaEnfrentamientos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--content-gap);
+}
+
+label {
+  font-family: var(--base-font-size);
+}
+
+.input-puntaje {
+  padding: 0.825rem;
+  border-radius: var(--input-border-radius);
+  width: 30%;
+  background-color: var(--secondary-color);
+  font-family: var(--base-font-size);
+  border: 1px solid black;
+}
+
+.check-participa {
+  width: 1.5rem;
+  height: 1.5rem;
+
+  accent-color: var(--accent-color);
+}
