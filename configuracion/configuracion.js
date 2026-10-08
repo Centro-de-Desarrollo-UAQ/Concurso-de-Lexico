@@ -1,4 +1,5 @@
 import {
+  getData,
   setEventName,
   setTotalRounds,
   getEventName,
@@ -10,14 +11,24 @@ const nameEventInput = document.getElementById('nameEvent');
 const numberRoundsInput = document.getElementById('totalRounds');
 
 const formConfiguration = document.getElementById('formConfiguration');
+const saveConfigButton = document.getElementById('saveConfigButton');
 
 function cargarConfiguracionInicial() {
   if (nameEventInput) nameEventInput.value = getEventName() || '';
   if (numberRoundsInput) numberRoundsInput.value = getTotalRounds() || '';
+
+  if (getData().started) {
+    nameEventInput.disabled = true;
+    numberRoundsInput.disabled = true;
+
+    saveConfigButton.hidden = true;
+  }
 }
 
 formConfiguration.addEventListener('submit', async (event) => {
   event.preventDefault();
+
+  if (getData().started) return;
 
   const nameInput = nameEventInput.value;
   const roundsInput = parseInt(numberRoundsInput.value, 10);
