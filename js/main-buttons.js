@@ -112,6 +112,38 @@ function waitForContent(el, timeout = 3000) {
   });
 }
 
+export function showCustom(mensaje, titulo = "Mensaje") {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("custom-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalMessage = document.getElementById("modal-message");
+    const confirmBtn = document.getElementById("modal-confirm-btn");
+    const cancelBtn = document.getElementById("modal-cancel-btn");
+
+    modalTitle.textContent = titulo;
+    modalMessage.textContent = mensaje;
+
+    cancelBtn.style.display = "none";
+
+    modal.classList.remove("hidden");
+
+    const handleConfirm = () => {
+      cleanup();
+      resolve();
+    };
+
+    const cleanup = () => {
+      modal.classList.add("hidden");
+
+      confirmBtn.removeEventListener("click", handleConfirm);
+
+      cancelBtn.style.display = "";
+    };
+
+    confirmBtn.addEventListener("click", handleConfirm);
+  });
+}
+
 function injectConfirmModal() {
   const modalHTML = /* html */ `
     <div id="custom-modal" class="modal-overlay hidden">
@@ -120,14 +152,19 @@ function injectConfirmModal() {
         <p id="modal-message"></p>
 
         <div class="modal-actions">
-          <button id="modal-cancel-btn" class="button default-button">Cancelar</button>
-          <button id="modal-confirm-btn" class="button accent-button">Aceptar</button>
+          <button id="modal-cancel-btn" class="button default-button">
+            Cancelar
+          </button>
+
+          <button id="modal-confirm-btn" class="button accent-button">
+            Aceptar
+          </button>
         </div>
       </div>
     </div>
   `;
 
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
 }
 
 function injectAlertModal() {
@@ -138,49 +175,51 @@ function injectAlertModal() {
         <p id="alert-modal-message"></p>
 
         <div class="modal-actions">
-          <button id="alert-modal-ok-btn" class="button accent-button">Aceptar</button>
+          <button id="alert-modal-ok-btn" class="button accent-button">
+            Aceptar
+          </button>
         </div>
       </div>
     </div>
   `;
 
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
 }
 
-export function alertCustom(mensaje, titulo = 'Alerta') {
+export function alertCustom(mensaje, titulo = "Alerta") {
   return new Promise((resolve) => {
-    const modal = document.getElementById('custom-alert-modal');
-    const modalTitle = document.getElementById('alert-modal-title');
-    const modalMessage = document.getElementById('alert-modal-message');
-    const okBtn = document.getElementById('alert-modal-ok-btn');
+    const modal = document.getElementById("custom-alert-modal");
+    const modalTitle = document.getElementById("alert-modal-title");
+    const modalMessage = document.getElementById("alert-modal-message");
+    const okBtn = document.getElementById("alert-modal-ok-btn");
 
     modalTitle.textContent = titulo;
     modalMessage.textContent = mensaje;
 
-    modal.classList.remove('hidden');
+    modal.classList.remove("hidden");
 
     const handleOk = () => {
-      modal.classList.add('hidden');
-      okBtn.removeEventListener('click', handleOk);
+      modal.classList.add("hidden");
+      okBtn.removeEventListener("click", handleOk);
       resolve(true);
     };
 
-    okBtn.addEventListener('click', handleOk);
+    okBtn.addEventListener("click", handleOk);
   });
 }
 
-export function confirmCustom(mensaje, titulo = 'Confirmar acción') {
+export function confirmCustom(mensaje, titulo = "Confirmar acción") {
   return new Promise((resolve) => {
-    const modal = document.getElementById('custom-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalMessage = document.getElementById('modal-message');
-    const confirmBtn = document.getElementById('modal-confirm-btn');
-    const cancelBtn = document.getElementById('modal-cancel-btn');
+    const modal = document.getElementById("custom-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalMessage = document.getElementById("modal-message");
+    const confirmBtn = document.getElementById("modal-confirm-btn");
+    const cancelBtn = document.getElementById("modal-cancel-btn");
 
     modalTitle.textContent = titulo;
     modalMessage.textContent = mensaje;
 
-    modal.classList.remove('hidden');
+    modal.classList.remove("hidden");
 
     const handleConfirm = () => {
       cleanup();
@@ -193,12 +232,13 @@ export function confirmCustom(mensaje, titulo = 'Confirmar acción') {
     };
 
     const cleanup = () => {
-      modal.classList.add('hidden');
-      confirmBtn.removeEventListener('click', handleConfirm);
-      cancelBtn.removeEventListener('click', handleCancel);
+      modal.classList.add("hidden");
+
+      confirmBtn.removeEventListener("click", handleConfirm);
+      cancelBtn.removeEventListener("click", handleCancel);
     };
 
-    confirmBtn.addEventListener('click', handleConfirm);
-    cancelBtn.addEventListener('click', handleCancel);
+    confirmBtn.addEventListener("click", handleConfirm);
+    cancelBtn.addEventListener("click", handleCancel);
   });
 }
