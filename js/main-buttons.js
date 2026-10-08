@@ -9,8 +9,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const printButton = document.getElementById('print-button');
   const resetButton = document.getElementById('reset-button');
 
-  exportButton.addEventListener('click', () => {
+  exportButton.addEventListener('click', async() => {
     const data = getData();
+
+    if (!data || Object.keys(data).length === 0 || !data.eventName) {
+      await alertCustom('No hay nada que exportar porque aún no se ha configurado el torneo.');
+      return; // Detiene la ejecución para no generar la descarga
+    }
 
     const dataStr = JSON.stringify(data, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
@@ -41,7 +46,13 @@ window.addEventListener('DOMContentLoaded', () => {
       reader.onload = async (e) => {
         try {
           const data = JSON.parse(e.target.result);
+
+        
+
           setData(data);
+
+          await alertCustom('¡Datos importados correctamente!');
+          window.location.reload();
         } catch (error) {
           await alertCustom('Error al parsear el archivo JSON.');
           console.error('Error al parsear el archivo JSON:', error);
