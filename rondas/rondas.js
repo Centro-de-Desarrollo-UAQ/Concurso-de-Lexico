@@ -168,7 +168,7 @@ function renderizarPantalla() {
     if (rounds.length >= totalRounds) {
       btnPrincipal.textContent = 'Ver resultados';
       // Cambiar la clase de estilo para distinguirlo
-      btnPrincipal.className = 'button accent-button'; 
+      btnPrincipal.className = 'button accent-button';
     } else {
       btnPrincipal.textContent = 'Generar siguiente ronda';
       btnPrincipal.className = 'button default-button';

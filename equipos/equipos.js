@@ -5,9 +5,8 @@ import {
   deleteTeam,
   startTournament,
   getData,
-  setData,
-  initialData,
 } from '../js/data.js';
+
 import { confirmCustom, alertCustom } from '../js/main-buttons.js';
 
 console.log('equipos.js conectado');
@@ -32,6 +31,7 @@ const limpiarButton = document.getElementById('limpiarCampos');
 const iniciarButton = document.getElementById('iniciarEvento');
 
 const equiposRegistrados = document.getElementById('equiposRegistrados');
+const formularioEquipo = document.getElementById('formularioEquipo');
 
 let equipoEditando = null;
 
@@ -147,8 +147,7 @@ function mostrarEquipos() {
   console.log('Equipos registrados:', equipos);
 
   if (equipos.length === 0) {
-    equiposRegistrados.innerHTML = `<p>No hay equipos registrados todavía.</p>`;
-
+    equiposRegistrados.innerHTML = '<p>No hay equipos registrados todavía.</p>';
     return;
   }
 
@@ -158,86 +157,66 @@ function mostrarEquipos() {
     tarjeta.classList.add('tarjeta-equipo');
 
     tarjeta.innerHTML = `
+      <div class="equipo-header">
+        <div>
+          <h3>${equipo.name}</h3>
+          <p>${equipo.school}</p>
+        </div>
 
-            <div class="equipo-header">
+        <div class="acciones-equipo">
+          ${
+            !getData().started
+              ? `
+                <button class="editar-equipo">Editar</button>
+                <button class="eliminar-equipo">Eliminar</button>
+              `
+              : ''
+          }
+        </div>
+      </div>
 
-                <div>
-                    <h3>${equipo.name}</h3>
-                    <p>${equipo.school}</p>
-                </div>
+      <div class="estudiantes-equipo">
+        <table class="tabla-estudiantes">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Estudiante</th>
+              <th>Sexo</th>
+            </tr>
+          </thead>
 
-                <div class="acciones-equipo">
-
-                    <button class="editar-equipo">
-                        Editar
-                    </button>
-
-                    <button class="eliminar-equipo">
-                        Eliminar
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="estudiantes-equipo">
-
-                <table class="tabla-estudiantes">
-
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Estudiante</th>
-                            <th>Sexo</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        ${equipo.students
-                          .map(
-                            (estudiante, index) => `
-
-                            <tr>
-
-                                <td>
-                                    ${index + 1}
-                                </td>
-
-                                <td>
-                                    ${estudiante.name || estudiante.nombre}
-                                </td>
-
-                                <td>
-                                    ${convertirGender(estudiante.gender)}
-                                </td>
-
-                            </tr>
-
-                        `
-                          )
-                          .join('')}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        `;
+          <tbody>
+            ${equipo.students
+              .map(
+                (estudiante, index) => `
+                  <tr>
+                    <td>${index + 1}</td>
+                    <td>${estudiante.name || estudiante.nombre}</td>
+                    <td>${convertirGender(estudiante.gender)}</td>
+                  </tr>
+                `
+              )
+              .join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
 
     const botonEditar = tarjeta.querySelector('.editar-equipo');
 
-    botonEditar.addEventListener('click', function () {
-      cargarEquipoParaEditar(equipo);
-    });
+    if (botonEditar) {
+      botonEditar.addEventListener('click', function () {
+        cargarEquipoParaEditar(equipo);
+      });
+    }
 
     const botonEliminar = tarjeta.querySelector('.eliminar-equipo');
 
-    botonEliminar.addEventListener('click', function () {
-      eliminarEquipo(equipo.id);
-    });
+    if (botonEliminar) {
+      botonEliminar.addEventListener('click', function () {
+        eliminarEquipo(equipo.id);
+      });
+    }
 
     equiposRegistrados.appendChild(tarjeta);
   });
@@ -247,27 +226,21 @@ function cargarEquipoParaEditar(equipo) {
   equipoEditando = equipo.id;
 
   escuelaInput.value = equipo.school;
-
   equipoInput.value = equipo.name;
 
   estudiante1Input.value = equipo.students[0].name || equipo.students[0].nombre;
-
   sexo1Input.value = convertirGender(equipo.students[0].gender);
 
   estudiante2Input.value = equipo.students[1].name || equipo.students[1].nombre;
-
   sexo2Input.value = convertirGender(equipo.students[1].gender);
 
   estudiante3Input.value = equipo.students[2].name || equipo.students[2].nombre;
-
   sexo3Input.value = convertirGender(equipo.students[2].gender);
 
   estudiante4Input.value = equipo.students[3].name || equipo.students[3].nombre;
-
   sexo4Input.value = convertirGender(equipo.students[3].gender);
 
   estudiante5Input.value = equipo.students[4].name || equipo.students[4].nombre;
-
   sexo5Input.value = convertirGender(equipo.students[4].gender);
 
   guardarButton.textContent = 'Guardar cambios';
@@ -296,7 +269,6 @@ async function eliminarEquipo(teamId) {
     mostrarEquipos();
   } catch (error) {
     console.error(error);
-
     await alertCustom(error.message);
   }
 }
@@ -307,7 +279,6 @@ limpiarButton.addEventListener('click', function () {
 
 function limpiarCampos() {
   escuelaInput.value = '';
-
   equipoInput.value = '';
 
   estudiante1Input.value = '';
@@ -340,16 +311,27 @@ iniciarButton.addEventListener('click', async function () {
   try {
     startTournament();
 
-    await alertCustom('Evento iniciado correctamente.');
-
+    actualizarVistaEvento();
     mostrarEquipos();
 
     window.location.href = '../rondas/rondas.html';
   } catch (error) {
     console.error(error);
-
     await alertCustom(error.message);
   }
 });
 
+function actualizarVistaEvento() {
+  const data = getData();
+
+  if (data.started) {
+    formularioEquipo.style.display = 'none';
+    iniciarButton.style.display = 'none';
+  } else {
+    formularioEquipo.style.display = '';
+    iniciarButton.style.display = '';
+  }
+}
+
+actualizarVistaEvento();
 mostrarEquipos();
