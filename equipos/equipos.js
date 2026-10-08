@@ -317,7 +317,7 @@ iniciarButton.addEventListener("click", async function () {
   try {
     startTournament();
 
-    await alertCustom("Evento iniciado correctamente.");
+    
 
     actualizarVistaEvento();
     mostrarEquipos();
