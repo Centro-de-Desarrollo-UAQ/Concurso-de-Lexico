@@ -102,10 +102,11 @@ export const startTournament = () => {
     throw new Error('Se necesitan al menos 2 equipos para iniciar el torneo.');
   }
 
-  dataState.started = true;
   if (dataState.rounds.length === 0) {
     generateRound();
   }
+
+  dataState.started = true;
   saveState();
 };
 

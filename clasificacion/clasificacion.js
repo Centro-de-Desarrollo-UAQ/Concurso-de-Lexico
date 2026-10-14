@@ -162,9 +162,9 @@ window.addEventListener('DOMContentLoaded', () => {
       return podiumEntry;
     });
 
-    podium.appendChild(podiumElements[1]);
-    podium.appendChild(podiumElements[0]);
-    podium.appendChild(podiumElements[2]);
+    if (podiumElements[1]) podium.appendChild(podiumElements[1]);
+    if (podiumElements[0]) podium.appendChild(podiumElements[0]);
+    if (podiumElements[2]) podium.appendChild(podiumElements[2]);
   };
 
   const renderNoTeamsAdvice = () => {
