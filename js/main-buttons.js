@@ -65,8 +65,8 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   printButton.addEventListener('click', () => {
-    const printZone = document.getElementById('clasification-print-zone');
-
+    const printZone = document.getElementById('positions-table');
+    
     if (!printZone) {
       window.location.href = '../clasificacion/clasificacion.html?print=true';
       return;

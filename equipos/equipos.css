@@ -106,7 +106,10 @@ select {
 }
 #row {
   display: flex;
-  gap: 42em;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+  gap: 1rem;
 }
 
 /* TARJETAS DE EQUIPOS */
