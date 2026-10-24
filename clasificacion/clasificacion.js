@@ -2,9 +2,12 @@ import {
   getSchoolStandings,
   getTeamStandings,
   getStudentStandings,
+  notifyDataChange,
 } from '../js/data.js';
 
 window.addEventListener('DOMContentLoaded', () => {
+  let actualViewId;
+
   const podium = document.getElementById('podium');
   const positionsTable = document.getElementById('positions-table');
   const printDetails = document.getElementById('print-details');
@@ -184,6 +187,8 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   const updateView = (viewId) => {
+    actualViewId = viewId;
+
     podium.innerHTML = '';
     positionsTable.innerHTML = '';
     printDetails.innerHTML = '';
@@ -211,4 +216,8 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   updateView('schools');
+
+  notifyDataChange(() => {
+    updateView(actualViewId);
+  });
 });

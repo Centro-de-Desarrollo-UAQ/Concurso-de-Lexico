@@ -89,6 +89,23 @@ const saveState = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dataState));
 };
 
+// Utility
+export const notifyDataChange = (callback) => {
+  window.addEventListener('storage', (event) => {
+    if (event.key === STORAGE_KEY) {
+      callback(event);
+    }
+  });
+};
+
+notifyDataChange((event) => {
+  if (!event.newValue) {
+    return;
+  }
+
+  dataState = JSON.parse(event.newValue);
+});
+
 // API Functions
 export const getData = () => dataState;
 
@@ -339,7 +356,9 @@ const buildPairings = (orderedTeams) => {
   if (isOdd) {
     const byeCandidates = [...orderedTeams]
       .reverse()
-      .sort((a, b) => Number(playedByes.has(a.id)) - Number(playedByes.has(b.id)));
+      .sort(
+        (a, b) => Number(playedByes.has(a.id)) - Number(playedByes.has(b.id))
+      );
 
     for (const candidate of byeCandidates) {
       const remainingTeams = orderedTeams.filter((t) => t.id !== candidate.id);
@@ -504,8 +523,7 @@ export const getStudentStandings = () => {
       const student = dataState.teams
         .flatMap((t) => t.students)
         .find(
-          (s) =>
-            getStudentId(team, s, team.students.indexOf(s)) === studentId
+          (s) => getStudentId(team, s, team.students.indexOf(s)) === studentId
         );
 
       const roundsPlayed = dataState.rounds.reduce((count, round) => {
