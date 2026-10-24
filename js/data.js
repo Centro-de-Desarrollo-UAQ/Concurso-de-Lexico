@@ -270,6 +270,16 @@ const getPlayedOpponents = () => {
   return opponents;
 };
 
+const getPlayedByes = () => {
+  const byes = new Set();
+  dataState.rounds.forEach((round) => {
+    if (round.byeTeamId) {
+      byes.add(round.byeTeamId);
+    }
+  });
+  return byes;
+};
+
 const shuffle = (values) => {
   const result = [...values];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -298,30 +308,21 @@ const getPairingCandidates = (team, remainingTeams, opponents) => {
     });
 };
 
-const findPairings = (teams, opponents, allowBye) => {
-  if (teams.length === 0) return { pairings: [], byeTeam: null };
+const findPairingsWithoutBye = (teams, opponents) => {
+  if (teams.length === 0) return [];
 
   const team = teams[0];
   const remaining = teams.slice(1);
   const candidates = getPairingCandidates(team, remaining, opponents);
 
   for (const candidate of candidates) {
-    const result = findPairings(
+    const subResult = findPairingsWithoutBye(
       remaining.filter((other) => other.id !== candidate.id),
-      opponents,
-      allowBye
+      opponents
     );
-    if (result) {
-      return {
-        pairings: [[team, candidate], ...result.pairings],
-        byeTeam: result.byeTeam,
-      };
+    if (subResult !== null) {
+      return [[team, candidate], ...subResult];
     }
-  }
-
-  if (allowBye) {
-    const result = findPairings(remaining, opponents, false);
-    if (result) return { pairings: result.pairings, byeTeam: team };
   }
 
   return null;
@@ -329,20 +330,38 @@ const findPairings = (teams, opponents, allowBye) => {
 
 const buildPairings = (orderedTeams) => {
   const opponents = getPlayedOpponents();
-  const result = findPairings(
-    orderedTeams,
-    opponents,
-    orderedTeams.length % 2 === 1
-  );
+  const playedByes = getPlayedByes();
+  const isOdd = orderedTeams.length % 2 === 1;
 
-  if (!result) {
+  let byeTeam = null;
+  let pairings = null;
+
+  if (isOdd) {
+    const byeCandidates = [...orderedTeams]
+      .reverse()
+      .sort((a, b) => Number(playedByes.has(a.id)) - Number(playedByes.has(b.id)));
+
+    for (const candidate of byeCandidates) {
+      const remainingTeams = orderedTeams.filter((t) => t.id !== candidate.id);
+      const result = findPairingsWithoutBye(remainingTeams, opponents);
+      if (result !== null) {
+        pairings = result;
+        byeTeam = candidate;
+        break;
+      }
+    }
+  } else {
+    pairings = findPairingsWithoutBye(orderedTeams, opponents);
+  }
+
+  if (!pairings) {
     throw new Error(
       'No existe un emparejamiento posible sin enfrentar equipos de la misma escuela.'
     );
   }
 
   return {
-    pairings: result.pairings.map(([teamA, teamB]) => ({
+    pairings: pairings.map(([teamA, teamB]) => ({
       id: uid('match'),
       teamAId: teamA.id,
       teamBId: teamB.id,
@@ -358,7 +377,7 @@ const buildPairings = (orderedTeams) => {
       teamBScore: 0,
       completed: false,
     })),
-    byeTeamId: result.byeTeam?.id || null,
+    byeTeamId: byeTeam?.id || null,
   };
 };
 
@@ -367,8 +386,7 @@ export const getTeamStandings = () => {
     .map((team) => {
       const wins = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          (pairing) =>
-            pairing.teamAId === team.id || pairing.teamBId === team.id
+          (p) => p.teamAId === team.id || p.teamBId === team.id
         );
 
         if (!pairing || !pairing.completed) return count;
@@ -382,8 +400,7 @@ export const getTeamStandings = () => {
 
       const draws = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          (pairing) =>
-            pairing.teamAId === team.id || pairing.teamBId === team.id
+          (p) => p.teamAId === team.id || p.teamBId === team.id
         );
         if (!pairing || !pairing.completed) return count;
 
@@ -392,8 +409,7 @@ export const getTeamStandings = () => {
 
       const losses = dataState.rounds.reduce((count, round) => {
         const pairing = round.pairings.find(
-          (pairing) =>
-            pairing.teamAId === team.id || pairing.teamBId === team.id
+          (p) => p.teamAId === team.id || p.teamBId === team.id
         );
         if (!pairing || !pairing.completed) return count;
         if (pairing.teamAId === team.id) {
@@ -479,18 +495,17 @@ export const getStudentStandings = () => {
 
   return Array.from(studentScores.entries())
     .map(([studentId, score]) => {
-      const team = dataState.teams.find((team) =>
-        team.students.some(
-          (s) => getStudentId(team, s, team.students.indexOf(s)) === studentId
+      const team = dataState.teams.find((t) =>
+        t.students.some(
+          (s) => getStudentId(t, s, t.students.indexOf(s)) === studentId
         )
       );
 
       const student = dataState.teams
-        .flatMap((team) => team.students)
+        .flatMap((t) => t.students)
         .find(
-          (student) =>
-            getStudentId(team, student, team.students.indexOf(student)) ===
-            studentId
+          (s) =>
+            getStudentId(team, s, team.students.indexOf(s)) === studentId
         );
 
       const roundsPlayed = dataState.rounds.reduce((count, round) => {
@@ -609,14 +624,6 @@ const validateScores = (teamAScores, teamBScores) => {
   }
 };
 
-/**
- * Registra el resultado de un enfrentamiento.
- *
- * `teamAScores` y `teamBScores` deben ser arreglos de exactamente 4 objetos
- * con la forma `{ participantId, score }`, por ejemplo:
- * `[{ participantId: "student_1", score: 8 }, ...]`.
- * `participantId` identifica al jugador que participo y `score` es su puntaje.
- */
 export const recordMatchResult = (
   roundId,
   pairingId,
@@ -642,14 +649,26 @@ export const recordMatchResult = (
   validateMatchParticipants(pairing, teamAScores, teamBScores);
   validateScores(teamAScores, teamBScores);
 
+  const scoreMapA = new Map(
+    teamAScores.map((result) => [result.participantId, Number(result.score)])
+  );
+  const scoreMapB = new Map(
+    teamBScores.map((result) => [result.participantId, Number(result.score)])
+  );
+
   pairing.teamAStudents = createParticipants(teamA, teamAStudentIds);
   pairing.teamBStudents = createParticipants(teamB, teamBStudentIds);
-  pairing.teamAStudents.forEach((student, index) => {
-    student.score = Number(teamAScores[index].score);
+
+  pairing.teamAStudents.forEach((student) => {
+    student.score = scoreMapA.get(student.id) ?? 0;
   });
-  pairing.teamBStudents.forEach((student, index) => {
-    student.score = Number(teamBScores[index].score);
+  pairing.teamBStudents.forEach((student) => {
+    student.score = scoreMapB.get(student.id) ?? 0;
   });
+
+  pairing.teamAStudentIds = teamAStudentIds;
+  pairing.teamBStudentIds = teamBStudentIds;
+
   pairing.teamAScore = teamAScores.reduce(
     (total, result) => total + Number(result.score),
     0
