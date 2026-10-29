@@ -11,7 +11,7 @@
   --podium-card-gap: 0.3rem;
 }
 
-#clasification-print-zone {
+#clasification-details {
   display: flex;
   gap: var(--content-gap);
   flex-direction: column;
@@ -91,17 +91,48 @@
   );
 }
 
-#print-details {
+#print-details, #clasification-print-zone {
   display: none;
+}
+
+.print-table {
+  /* Add simply styles with borders */
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  break-after: page;
+}
+
+.print-table th, .print-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
 }
 
 /* Print */
 @media print {
-  #podium {
+  body {
+    background: #ffffff;
+  }
+
+  .main-buttons,
+  .switcher,
+  .no-print {
     display: none;
   }
 
-  #print-details {
+  #podium {
+    display: none;
+  }
+  #clasification-print-zone, #print-details {
     display: block;
+  }
+
+  @page {
+    @bottom-right {
+      content: counter(page);
+      font-size: 1.2em;
+    }
   }
 }

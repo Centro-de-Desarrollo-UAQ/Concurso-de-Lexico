@@ -261,19 +261,6 @@ p {
   background-color: var(--secondary-color);
 }
 
-/* Print */
-@media print {
-  body {
-    background: #ffffff;
-  }
-
-  .main-buttons,
-  .switcher,
-  .no-print {
-    display: none;
-  }
-}
-
 /* Ocultar modal */
 .hidden {
   display: none !important;
