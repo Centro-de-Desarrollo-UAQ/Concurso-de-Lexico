@@ -122,7 +122,7 @@ function renderColumnaEstudiantes(
       const yaJugoEsteId = resultado ? true : false;
       const puntaje = resultado ? resultado.score : 0;
 
-      return `
+      return /* html */ `
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
                 <input type="checkbox" tabindex="-1" class="check-participa" data-student-id="${studentId}" ${yaJugoEsteId || !studentsConPuntaje ? 'checked' : ''}>
                 <label style="flex:1;">${nombre}</label>
@@ -190,14 +190,15 @@ function renderizarPantalla() {
     lista.appendChild(aviso);
   }
 
-  ronda.pairings.forEach((pairing) => {
+  ronda.pairings.forEach((pairing, number) => {
     const teamA = getTeam(pairing.teamAId);
     const teamB = getTeam(pairing.teamBId);
 
     const tarjeta = document.createElement('div');
     tarjeta.className = 'card';
 
-    tarjeta.innerHTML = `
+    tarjeta.innerHTML = /* html */ `
+            <div class="text-lg text-bold" style="text-align:center;">Enfrentamiento ${number + 1}</div>
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <div><strong>${teamA.name}</strong><br><span class="text-xs">${teamA.school}</span></div>
                 <div class="text-bold text-lg">VS</div>
