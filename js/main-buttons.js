@@ -1,19 +1,23 @@
+import { setPrintTable } from '../clasificacion/clasificacion.js';
 import { getData, setData, initialData } from './data.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   injectConfirmModal();
   injectAlertModal();
+  injectPrintModal();
 
   const exportButton = document.getElementById('export-button');
   const importButton = document.getElementById('import-button');
   const printButton = document.getElementById('print-button');
   const resetButton = document.getElementById('reset-button');
 
-  exportButton.addEventListener('click', async() => {
+  exportButton.addEventListener('click', async () => {
     const data = getData();
 
     if (!data || Object.keys(data).length === 0 || !data.eventName) {
-      await alertCustom('No hay nada que exportar porque aún no se ha configurado el torneo.');
+      await alertCustom(
+        'No hay nada que exportar porque aún no se ha configurado el torneo.'
+      );
       return; // Detiene la ejecución para no generar la descarga
     }
 
@@ -47,8 +51,6 @@ window.addEventListener('DOMContentLoaded', () => {
         try {
           const data = JSON.parse(e.target.result);
 
-        
-
           setData(data);
 
           await alertCustom('¡Datos importados correctamente!');
@@ -64,13 +66,21 @@ window.addEventListener('DOMContentLoaded', () => {
     input.click();
   });
 
-  printButton.addEventListener('click', () => {
+  printButton.addEventListener('click', async () => {
     const printZone = document.getElementById('positions-table');
-    
+
     if (!printZone) {
       window.location.href = '../clasificacion/clasificacion.html?print=true';
       return;
     }
+
+    await printCustom().then((option) => {
+      if (option === 'current') {
+        setPrintTable('current');
+      } else if (option === 'all') {
+        setPrintTable('all');
+      }
+    });
 
     window.print();
   });
@@ -86,21 +96,23 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   if (window.location.search.includes('print=true')) {
-    const printZone = document.getElementById('clasification-print-zone');
-
-    if (printZone) {
-      waitForContent(printZone).then(async () => {
-        await document.fonts.ready;
-        await new Promise((r) =>
-          requestAnimationFrame(() => requestAnimationFrame(r))
-        );
-        window.print();
-      });
-    }
-
     const url = new URL(window.location);
     url.searchParams.delete('print');
     window.history.replaceState({}, document.title, url.toString());
+
+    printButton.click();
+
+    // const printZone = document.getElementById('clasification-print-zone');
+
+    // if (printZone) {
+    //   waitForContent(printZone).then(async () => {
+    //     await document.fonts.ready;
+    //     await new Promise((r) =>
+    //       requestAnimationFrame(() => requestAnimationFrame(r))
+    //     );
+    //     window.print();
+    //   });
+    // }
   }
 });
 
@@ -197,6 +209,29 @@ function injectAlertModal() {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
+function injectPrintModal() {
+  const modalHTML = /* html */ `
+    <div id="custom-print-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 id="print-modal-title">Imprimir</h3>
+        <p id="print-modal-message">¿Deseas imprimir la vista actual o todas las vistas?</p>
+
+        <div class="modal-actions">
+          <button id="print-modal-current-btn" class="button default-button">
+            Actual
+          </button>
+
+          <button id="print-modal-all-btn" class="button accent-button">
+            Todas
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
 export function alertCustom(mensaje, titulo = 'Alerta') {
   return new Promise((resolve) => {
     const modal = document.getElementById('custom-alert-modal');
@@ -251,5 +286,32 @@ export function confirmCustom(mensaje, titulo = 'Confirmar acción') {
 
     confirmBtn.addEventListener('click', handleConfirm);
     cancelBtn.addEventListener('click', handleCancel);
+  });
+}
+
+export function printCustom() {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('custom-print-modal');
+    const currentBtn = document.getElementById('print-modal-current-btn');
+    const allBtn = document.getElementById('print-modal-all-btn');
+
+    modal.classList.remove('hidden');
+
+    const handleCurrent = () => {
+      modal.classList.add('hidden');
+      currentBtn.removeEventListener('click', handleCurrent);
+      allBtn.removeEventListener('click', handleAll);
+      resolve('current');
+    };
+
+    const handleAll = () => {
+      modal.classList.add('hidden');
+      currentBtn.removeEventListener('click', handleCurrent);
+      allBtn.removeEventListener('click', handleAll);
+      resolve('all');
+    };
+
+    currentBtn.addEventListener('click', handleCurrent);
+    allBtn.addEventListener('click', handleAll);
   });
 }

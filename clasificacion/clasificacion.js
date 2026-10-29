@@ -5,6 +5,22 @@ import {
   notifyDataChange,
 } from '../js/data.js';
 
+let renderPrintTable;
+
+/* Needs to use renderPrintTable on change */
+export const setPrintTable = (table) => {
+  if (
+    table !== 'all' &&
+    table !== 'current'
+  ) {
+    throw new Error(
+      `Valor inválido para printTable: ${table}. Debe ser uno de: 'all', 'schools', 'teams', 'students', 'male-students', 'female-students'.`
+    );
+  }
+
+  if (renderPrintTable) renderPrintTable(table);
+};
+
 window.addEventListener('DOMContentLoaded', () => {
   const gsap = window.gsap;
   const Flip = window.Flip;
@@ -12,7 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const podium = document.getElementById('podium');
   const positionsTable = document.getElementById('positions-table');
-  const printDetails = document.getElementById('print-details');
+  const printZone = document.getElementById('clasification-print-zone');
 
   if (!gsap || !Flip) {
     throw new Error(
@@ -55,74 +71,105 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const getStandingHeadingHTML = (viewId) => {
+  const getPrintDetailsHTML = (viewId) => {
+    return /* html */ `
+      <h1 class="text-center text-2xl text-bold">Clasificación de ${getName(viewId)}</h1>
+      <p class="text-center">Generado el ${new Date().toLocaleDateString()}</p>
+    `;
+  };
+
+  const getPrintTableHTML = (viewId, standings) => {
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+
+    thead.innerHTML = /* html */ `
+      <tr>
+        ${getStandingHeadingHTML(viewId, 'th')}
+      </tr>
+    `;
+
+    standings.forEach((entry, index) => {
+      const position = index + 1;
+      const row = document.createElement('tr');
+      row.innerHTML = getStandingHTML(viewId, entry, position, 'td');
+      tbody.appendChild(row);
+    });
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    table.classList.add('print-table');
+    return table.outerHTML;
+  };
+
+  const getStandingHeadingHTML = (viewId, headingTag = 'p') => {
     switch (viewId) {
       case 'schools':
         return /* html */ `
-          <p class="text-bold">Pos</p>
-          <p class="text-bold">Escuela</p>
-          <p class="text-bold">Equipos</p>
-          <p class="text-bold">Puntos</p>
-          <p class="text-bold">G</p>
-          <p class="text-bold">E</p>
-          <p class="text-bold">P</p>
+          <${headingTag} class="text-bold">Pos</${headingTag}>
+          <${headingTag} class="text-bold">Escuela</${headingTag}>
+          <${headingTag} class="text-bold">Equipos</${headingTag}>
+          <${headingTag} class="text-bold">Puntos</${headingTag}>
+          <${headingTag} class="text-bold">G</${headingTag}>
+          <${headingTag} class="text-bold">E</${headingTag}>
+          <${headingTag} class="text-bold">P</${headingTag}>
         `;
       case 'teams':
         return /* html */ `
-          <p class="text-bold">Pos</p>
-          <p class="text-bold">Equipo</p>
-          <p class="text-bold">Escuela</p>
-          <p class="text-bold">Puntos</p>
-          <p class="text-bold">G</p>
-          <p class="text-bold">E</p>
-          <p class="text-bold">P</p>
+          <${headingTag} class="text-bold">Pos</${headingTag}>
+          <${headingTag} class="text-bold">Equipo</${headingTag}>
+          <${headingTag} class="text-bold">Escuela</${headingTag}>
+          <${headingTag} class="text-bold">Puntos</${headingTag}>
+          <${headingTag} class="text-bold">G</${headingTag}>
+          <${headingTag} class="text-bold">E</${headingTag}>
+          <${headingTag} class="text-bold">P</${headingTag}>
         `;
       case 'students':
       case 'male-students':
       case 'female-students':
         return /* html */ `
-          <p class="text-bold">Pos</p>
-          <p class="text-bold">Estudiante</p>
-          <p class="text-bold">Escuela</p>
-          <p class="text-bold">Equipo</p>
-          <p class="text-bold">Rondas Jugadas</p>
-          <p class="text-bold">Puntos</p>
+          <${headingTag} class="text-bold">Pos</${headingTag}>
+          <${headingTag} class="text-bold">Estudiante</${headingTag}>
+          <${headingTag} class="text-bold">Escuela</${headingTag}>
+          <${headingTag} class="text-bold">Equipo</${headingTag}>
+          <${headingTag} class="text-bold">Rondas Jugadas</${headingTag}>
+          <${headingTag} class="text-bold">Puntos</${headingTag}>
         `;
     }
   };
 
-  const getStandingHTML = (viewId, entry, position) => {
+  const getStandingHTML = (viewId, entry, position, headingTag = 'p') => {
     switch (viewId) {
       case 'schools':
         return /* html */ `
-          <p class="text-bold">${position}</p>
-          <p>${entry.school}</p>
-          <p>${entry.teams}</p>
-          <p>${entry.score}</p>
-          <p>${entry.wins}</p>
-          <p>${entry.draws}</p>
-          <p>${entry.losses}</p>
+          <${headingTag} class="text-bold">${position}</${headingTag}>
+          <${headingTag}>${entry.school}</${headingTag}>
+          <${headingTag}>${entry.teams}</${headingTag}>
+          <${headingTag}>${entry.score}</${headingTag}>
+          <${headingTag}>${entry.wins}</${headingTag}>
+          <${headingTag}>${entry.draws}</${headingTag}>
+          <${headingTag}>${entry.losses}</${headingTag}>
         `;
       case 'teams':
         return /* html */ `
-          <p class="text-bold">${position}</p>
-          <p>${entry.name}</p>
-          <p>${entry.school}</p>
-          <p>${entry.score}</p>
-          <p>${entry.wins}</p>
-          <p>${entry.draws}</p>
-          <p>${entry.losses}</p>
+          <${headingTag} class="text-bold">${position}</${headingTag}>
+          <${headingTag}>${entry.name}</${headingTag}>
+          <${headingTag}>${entry.school}</${headingTag}>
+          <${headingTag}>${entry.score}</${headingTag}>
+          <${headingTag}>${entry.wins}</${headingTag}>
+          <${headingTag}>${entry.draws}</${headingTag}>
+          <${headingTag}>${entry.losses}</${headingTag}>
         `;
       case 'students':
       case 'male-students':
       case 'female-students':
         return /* html */ `
-          <p class="text-bold">${position}</p>
-          <p>${entry.name}</p>
-          <p>${entry.school}</p>
-          <p>${entry.team}</p>
-          <p>${entry.roundsPlayed}</p>
-          <p>${entry.score}</p>
+          <${headingTag} class="text-bold">${position}</${headingTag}>
+          <${headingTag}>${entry.name}</${headingTag}>
+          <${headingTag}>${entry.school}</${headingTag}>
+          <${headingTag}>${entry.team}</${headingTag}>
+          <${headingTag}>${entry.roundsPlayed}</${headingTag}>
+          <${headingTag}>${entry.score}</${headingTag}>
         `;
     }
   };
@@ -157,9 +204,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const renderPositions = (viewId, standings) => {
     const existingElements = new Map(
-      [...positionsTable.querySelectorAll('.position-card[data-standing-key]')].map(
-        (element) => [element.dataset.standingKey, element]
-      )
+      [
+        ...positionsTable.querySelectorAll('.position-card[data-standing-key]'),
+      ].map((element) => [element.dataset.standingKey, element])
     );
     const positionsElements = standings.map((entry, index) => {
       const key = getStandingKey(viewId, entry);
@@ -219,7 +266,11 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // The winner stays visually centered, with second and third place on either side.
-    const visualOrder = [podiumElements[1], podiumElements[0], podiumElements[2]];
+    const visualOrder = [
+      podiumElements[1],
+      podiumElements[0],
+      podiumElements[2],
+    ];
     podium.replaceChildren(...visualOrder.filter(Boolean));
   };
 
@@ -232,25 +283,39 @@ window.addEventListener('DOMContentLoaded', () => {
     podium.appendChild(adviceElement);
   };
 
-  const renderPrintDetails = (viewId) => {
-    printDetails.innerHTML = /* html */ `
-      <h1 class="text-center text-2xl text-bold">Clasificación de ${getName(viewId)}</h1>
-      <p class="text-center">Generado el ${new Date().toLocaleDateString()}</p>
-    `;
+  renderPrintTable = (selectedTable) => {
+    printZone.innerHTML = '';
+    if (selectedTable === 'all') {
+      [
+        'schools',
+        'teams',
+        'students',
+        'male-students',
+        'female-students',
+      ].forEach((viewId) => {
+        const standings = getStandings(viewId);
+        printZone.innerHTML += getPrintDetailsHTML(viewId);
+        printZone.innerHTML += getPrintTableHTML(viewId, standings);
+      });
+    } else {
+      const standings = getStandings(actualViewId);
+      printZone.innerHTML += getPrintDetailsHTML(actualViewId);
+      printZone.innerHTML += getPrintTableHTML(actualViewId, standings);
+    }
   };
 
   const animateInitialRender = () => {
-    const podiumAnimationOrder = [...podium.querySelectorAll('.podium-entry')].sort(
-      (left, right) => {
-        const leftPosition = Number(
-          left.querySelector('.podium-number').textContent
-        );
-        const rightPosition = Number(
-          right.querySelector('.podium-number').textContent
-        );
-        return rightPosition - leftPosition;
-      }
-    );
+    const podiumAnimationOrder = [
+      ...podium.querySelectorAll('.podium-entry'),
+    ].sort((left, right) => {
+      const leftPosition = Number(
+        left.querySelector('.podium-number').textContent
+      );
+      const rightPosition = Number(
+        right.querySelector('.podium-number').textContent
+      );
+      return rightPosition - leftPosition;
+    });
 
     gsap.fromTo(
       podiumAnimationOrder,
@@ -292,10 +357,9 @@ window.addEventListener('DOMContentLoaded', () => {
       nested: true,
       prune: true,
       onComplete: () =>
-        gsap.set(
-          positionsTable.querySelectorAll('.position-card'),
-          { clearProps: 'transform' }
-        ),
+        gsap.set(positionsTable.querySelectorAll('.position-card'), {
+          clearProps: 'transform',
+        }),
     });
 
     gsap.fromTo(
@@ -315,7 +379,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const canFlip =
       podium.querySelector('.podium-entry') && previousViewId === viewId;
     actualViewId = viewId;
-    printDetails.innerHTML = '';
 
     const standings = getStandings(viewId);
 
@@ -333,7 +396,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     renderPodium(viewId, standings);
     renderPositions(viewId, standings);
-    renderPrintDetails(viewId);
 
     if (canFlip) {
       animatePositionChange(podiumState, positionsState);
@@ -356,5 +418,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   notifyDataChange(() => {
     updateView(actualViewId);
+    if (printTable) renderPrintTable(printTable);
   });
 });
